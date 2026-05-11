@@ -1,0 +1,18 @@
+{
+  "extends": "../../config/typescript-config/react-library.json",
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "outDir": "dist",
+    "paths": {
+      "@hooks/*": ["hooks/*"],
+      "@lib/*": ["lib/*"],
+      "@components/*": ["components/*"],
+      "@store/*": ["store/*"],
+      "@utils/*": ["utils/*"],
+      "@mocking-gui-types/*": ["types/*"],
+      "@constants/*": ["constants/*"]
+    }
+  },
+  "include": ["src/**/*", "index.html", "vite-env.d.ts"],
+  "exclude": ["node_modules", "dist", "**/*.test.*", "**/*.spec.*"]
+}

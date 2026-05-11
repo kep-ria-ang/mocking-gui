@@ -1,0 +1,41 @@
+{
+  "name": "mocking-gui-monorepo",
+  "version": "1.0.0",
+  "description": "A GUI library that provides an MSW-based mocking panel",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kakaoenterprise/mocking-gui.git"
+  },
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "lint:fix": "turbo run lint:fix",
+    "format": "prettier --write \"**/*.{ts,tsx,md,json,js,mjs,cjs}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,md,json,js,mjs,cjs}\"",
+    "mocking-gui:build": "pnpm --filter @kakaocloud/mocking-gui build --watch",
+    "example:dev": "pnpm turbo run dev --filter=./examples/*",
+    "docs:dev": "pnpm --filter @mocking-gui/docs dev",
+    "docs:build": "pnpm --filter @mocking-gui/docs build",
+    "docs:preview": "pnpm --filter @mocking-gui/docs preview",
+    "docs:deploy": "pnpm --filter @mocking-gui/docs deploy"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.30.1",
+    "@types/node": "24.0.12",
+    "eslint": "^9.30.1",
+    "eslint-config-prettier": "^10.1.5",
+    "eslint-plugin-prettier": "5.5.1",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.5",
+    "eslint-plugin-unused-imports": "^4.1.4",
+    "turbo": "2.5.4"
+  },
+  "engines": {
+    "node": ">=22.0.0",
+    "pnpm": ">=9"
+  },
+  "packageManager": "pnpm@9.15.9"
+}

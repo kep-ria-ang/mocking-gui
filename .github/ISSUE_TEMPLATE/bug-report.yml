@@ -1,0 +1,95 @@
+name: 🐛 Bug Report
+description: Report bugs or issues found in the library
+title: "[BUG] "
+labels: ["type: bug"]
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        # 🐛 Bug Report
+
+        Thank you for taking the time to report a bug!
+        Please fill out the form below with as much detail as possible so the team can investigate and fix the issue quickly.
+
+        👉 **If you have a question or need help**, please use the appropriate **Question / Discussion issue template** instead of this one.
+
+  - type: textarea
+    id: current-behavior
+    attributes:
+      label: 🔴 Current behavior
+      description: Clearly describe what is currently happening.
+      placeholder: |
+        When clicking the button, the modal does not open as expected.
+        No errors appear in the console.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: 🟢 Expected behavior
+      description: Describe what you expected to happen.
+      placeholder: |
+        The modal should open when the button is clicked.
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps-to-reproduce
+    attributes:
+      label: 🔄 Steps to reproduce
+      description: |
+        Please provide clear and minimal steps to reproduce the issue.
+      placeholder: |
+        1. Clone the project: `git clone ...`
+        2. Install dependencies: `npm install`
+        3. Start the app: `npm start`
+        4. Click the [specific button]
+        5. Observe the issue
+    validations:
+      required: true
+
+  - type: textarea
+    id: error-logs
+    attributes:
+      label: ⚠️ Error messages / console logs
+      description: |
+        Paste any relevant error messages, console output, or stack traces here.
+      render: javascript
+      placeholder: |
+        Paste error logs here
+
+
+  - type: input
+    id: affected-version
+    attributes:
+      label: 📦 Affected version(s)
+      description: |
+        Which version(s) are affected? (e.g. 1.5.0)
+        If multiple versions are affected, list them all.
+      placeholder: 1.5.0, 1.6.0
+    validations:
+      required: false
+      
+
+  - type: dropdown
+    id: affected-browsers
+    attributes:
+      label: 🌐 Affected browsers
+      description: Select all that apply.
+      multiple: true
+      options:
+        - Chrome (latest)
+        - Chrome (older versions)
+        - Firefox (latest)
+        - Firefox (older versions)
+        - Safari (latest)
+        - Safari (older versions)
+        - Edge (latest)
+        - Edge (older versions)
+        - IE 11
+        - Mobile browsers
+        - All browsers
+    validations:
+      required: false

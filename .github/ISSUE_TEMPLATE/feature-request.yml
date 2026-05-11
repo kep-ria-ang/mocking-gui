@@ -1,0 +1,37 @@
+name: 🌟 Feature Request
+description: Suggest a new feature or enhancement for the library
+title: "[FEATURE] "
+labels: ["type: feature"]
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        # 🌟 Feature Request
+
+        Thank you for suggesting a new feature! 🙌
+
+        **Before submitting a feature request, please check the following:**
+        - [ ] Is a similar feature already reported in [Issues](../../issues)?
+        - [ ] Is it already being discussed in [Discussions](../../discussions)?
+        - [ ] Is this a new feature request, not a bug fix?
+
+        > ℹ️ **Tip:** If this is a bug report rather than a feature request, please use the [Bug Report](./bug_report.yml) template.
+
+  - type: textarea
+    id: what-would-you-like
+    attributes:
+      label: What would you like?
+      description: Describe the feature or change you would like to see.
+      placeholder: |
+        Example: I would like the Button component to support a loading state.
+    validations:
+      required: true
+
+  - type: textarea
+    id: why-is-this-needed
+    attributes:
+      label: Why is this needed?
+      description: Explain why this feature is necessary and what problem it solves.
+      placeholder: |
+        Example: Without a loading state, users cannot tell whether an action is in progress.

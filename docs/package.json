@@ -1,0 +1,21 @@
+{
+  "name": "@mocking-gui/docs",
+  "version": "1.0.0",
+  "description": "Mocking GUI Documentation Site",
+  "type": "module",
+  "scripts": {
+    "dev": "vitepress dev",
+    "build": "vitepress build",
+    "preview": "vitepress preview",
+    "deploy": "gh-pages -d .vitepress/dist",
+    "publish:local": "pnpm run build && pnpm run deploy"
+  },
+  "devDependencies": {
+    "gh-pages": "^6.1.1",
+    "vitepress": "^1.6.3",
+    "vue": "^3.5.27"
+  },
+  "dependencies": {
+    "@kakaocloud/mocking-gui": "workspace:*"
+  }
+}
