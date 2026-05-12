@@ -58,10 +58,9 @@ import { MockingGUIBoundary } from '@kakaocloud/mocking-gui/browser';
 
 function App() {
   return (
-    <div>
+    <MockingGUIBoundary>
       <YourAppContent />
-      <MockingGUIBoundary />
-    </div>
+    </MockingGUIBoundary>
   );
 }
 ```

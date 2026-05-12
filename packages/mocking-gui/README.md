@@ -82,14 +82,13 @@ Import `MockingGUIBoundary` and use it in your root component (e.g., `_app.tsx` 
 
 ```tsx
 import { MockingGUIBoundary } from '@kakaocloud/mocking-gui/browser';
-import { MockingConfig } from './mocking-gui.config';
+import { mockConfig } from './config';
 
 function App() {
   return (
-    <>
-      <MockingGUIBoundary config={MockingConfig} />
+    <MockingGUIBoundary config={mockConfig}>
       <AppContent />
-    </>
+    </MockingGUIBoundary>
   );
 }
 ```

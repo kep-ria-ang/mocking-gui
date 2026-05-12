@@ -5,7 +5,7 @@
   <p>
     Manage API mocks, simulate complex scenarios, and accelerate development with a powerful GUI.
   </p>
-  <a href="https://pages.github.com/kakaoenterprise/mocking-gui">
+  <a href="https://kakaoenterprise.github.io/mocking-gui">
     <img src="https://img.shields.io/badge/docs-mocking--gui-blue?logo=read-the-docs&logoColor=white" alt="Mocking GUI Docs" />
   </a>
   <a href="https://www.npmjs.com/package/@kakaocloud/mocking-gui">
@@ -54,7 +54,7 @@ npx msw init <PUBLIC_DIR>
 
 2. **Add the Mocking GUI Panel**
 
-Simply render `MockingGUIBoundary` iyoot corootneompnt
+Simply render `MockingGUIBoundary` in your root component:
 
 ```tsx
 // src/App.tsx
@@ -87,45 +87,36 @@ Explore our ready-to-run examples to see it in action:
 
 ## Documentation
 
-For comprehensive guides and API references, visit our [documentation site](https://pages.github.com/kakaoenterprise/mocking-gui).
+For comprehensive guides and API references, visit our [documentation site](https://kakaoenterprise.github.io/mocking-gui).
 
-- [**Introduction**](https://pages.github.com/kakaoenterprise/mocking-gui/guide/introduction)
-- [**API Reference**](https://pages.github.com/kakaoenterprise/mocking-gui/guide/usage/api-guide)
+- [**Introduction**](https://kakaoenterprise.github.io/mocking-gui/guide/introduction)
+- [**API Reference**](https://kakaoenterprise.github.io/mocking-gui/guide/usage/api-guide)
 - [**AI Agentic Harness Guide**](./docs/guide/agentic-harness.md)
 - [**Contributing Guide**](./CONTRIBUTING.md)
 
----
+## AI Agentic Harness
 
-## 🎯 Mission Map: 상황별 워크플로우 가이드
+Mocking GUI is developed and maintained with the help of a specialized AI agent team. You can leverage these workflows and skills to accelerate your development or integration process.
 
-원할한 기여를 위해 사용자의 상황에 맞는 **전문가 워크플로우**를 제공합니다. 당신이 필요한 미션을 선택하고 에이전트에게 요청하세요.
+### Mission Map: Workflow Selection
 
-| 당신의 상황 (Situation)              | 요청할 미션 (Mission Request)                     | 결과물 (Outcome)                          |
-| :----------------------------------- | :------------------------------------------------ | :---------------------------------------- |
-| **라이브러리 자체를 개발/수정할 때** | `@harness-dev-pipeline, 개발 파이프라인 시작해줘` | 설계-구현-테스트 파이프라인 진행          |
-| **기존 MSW에서 마이그레이션할 때**   | `@technical-solution-support, 진단 시작해줘`      | 자동 진단 기반의 도입 전략 및 솔루션 제공 |
+Select a mission that aligns with your context and request it via your **AI coding assistant**.
 
----
+| Your Context                     | Mission Request               | Outcome                                            |
+| :------------------------------- | :---------------------------- | :------------------------------------------------- |
+| **Enhancing Library Core/UI**    | `/harness-dev-pipeline`       | Full Design-Dev-Test pipeline orchestration        |
+| **Project Adoption & Migration** | `/technical-solution-support` | Context-aware adoption strategy and migration plan |
 
-## 🚀 Entry Points: 영역별 전문 지식 베이스
+### Knowledge Entry Points
 
-하네스 에이전트 시스템은 각 도메인에 특화된 **단일 진입점(Entry Point)**을 제공합니다. 지금 당신이 처한 상황에 맞는 스킬을 선택하세요.
+Leverage specialized skills for precise assistance in specific domains:
 
-- **[Handler Generation](./.agents/skills/handler-generation/SKILL.md)**: "새로운 API를 모킹해야 하거나, Swagger 명세가 준비되어 있어요."
-- **[Mocking GUI Core Knowledge](./.agents/skills/harness-core/SKILL.md)**: "라이브러리 내부 동작 원리나 서버 사이드 동기화 구조가 궁금해요."
-- **[Scenario Orchestration](./.agents/skills/scenario-orchestration/SKILL.md)**: "여러 API 상태를 조합하여 복잡한 비즈니스 흐름(버그 재현 등)을 설계하고 싶어요."
-- **[Technical Guardrail](./.agents/skills/technical-guardrail/SKILL.md)**: "우리 프로젝트의 모킹 구조가 표준 레이어를 잘 지키고 있는지 검토하고 싶어요."
+- **[Handler Generation](./.agents/skills/handler-generation/SKILL.md)**: Automate handler creation from API specifications.
+- **[Core Knowledge](./.agents/skills/harness-core/SKILL.md)**: Deep-dive into library architecture and state synchronization.
+- **[Scenario Orchestration](./.agents/skills/scenario-orchestration/SKILL.md)**: Design complex multi-API business flows.
+- **[Technical Guardrail](./.agents/skills/technical-guardrail/SKILL.md)**: Audit project mocking structures against standards.
 
----
-
-## 🤝 Technical Solution Support 호출하기
-
-대규모 프로젝트 도입이나 구조적인 마이그레이션 고민이 있다면 솔루션 팀을 즉시 호출하세요.
-
-1. **진단 요청**: `@technical-solution-support, 프로젝트 도입 진단 및 솔루션 서포트 진행해줘.`
-2. **자동 실행**: 에이전트가 `technical-solution-support` 워크플로우를 가동하여 상황별 최적의 솔루션을 제안합니다.
-
----
+For more details on collaborating with our agents, see the **[AI Agentic Harness Guide](./docs/guide/agentic-harness.md)**.
 
 ## Contributing
 

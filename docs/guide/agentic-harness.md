@@ -9,7 +9,7 @@ Choose the agent mission that matches your contribution goal.
 ### Case 1: Improve or Add Features to Mocking GUI
 
 - **When**: You want to modify the GUI panel UI or add new functionality to the core engine.
-- **How**: Run `/harness-dev-pipeline` in Claude Code.
+- **How**: Run `/harness-dev-pipeline` in your AI assistant.
 - **Result**: The `harness-dev-pipeline` workflow orchestrates four sequential phases — Product Planning → Architecture Design → Implementation → Quality Verification — with each phase delegated to a specialized sub-agent.
 
 ### Case 2: Generate Service Mocking Handlers
@@ -21,7 +21,7 @@ Choose the agent mission that matches your contribution goal.
 ### Case 3: Project Onboarding and Migration
 
 - **When**: You want to integrate Mocking GUI into an existing project, or refactor an existing MSW setup to the Mocking GUI standard.
-- **How**: Run `/technical-solution-support` in Claude Code.
+- **How**: Run `/technical-solution-support` in your AI assistant.
 - **Result**: The `technical-solution-support` workflow analyzes your project environment and provides an optimized migration strategy and onboarding guide.
 
 ## 🚀 Agentic Quality Gate

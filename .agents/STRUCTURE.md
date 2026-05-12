@@ -19,7 +19,7 @@ This document defines the physical layout and logical reference structure among 
 CLAUDE.md                             # [Always-On Rules] Auto-loaded at session start
 └── @.agents/rules/operation-mandates.md
 
-.claude/                              # [Claude Code Integration] All directory symbolic links
+.claude/                              # [AI Tool Integration] All directory symbolic links
 ├── commands -> .agents/workflows     # Slash commands (/harness-dev-pipeline, etc.)
 ├── skills   -> .agents/skills        # Skill knowledge bases
 └── agents   -> .agents/personas      # Personas → sub-agent definitions
@@ -32,11 +32,11 @@ agent-artifacts/                      # [Artifacts Layer] Isolated storage for a
 
 ---
 
-## 2. Claude Code Integration Principles
+## 2. AI Tool Integration Principles
 
 **The source of truth lives only in `.agents/`. `.claude/` consists solely of directory-level symbolic links.**
 
-| `.agents/` Source | `.claude/` Link        | Claude Code Role               |
+| `.agents/` Source | `.claude/` Link        | AI Tool Role                   |
 | ----------------- | ---------------------- | ------------------------------ |
 | `rules/`          | `CLAUDE.md @reference` | Always loaded at session start |
 | `workflows/`      | `commands/`            | Slash commands                 |

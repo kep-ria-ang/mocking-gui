@@ -3,7 +3,7 @@ import { handlers } from '@/mocks/handlers';
 
 import type { MockingConfig } from '@kakaocloud/mocking-gui';
 
-export const MockConfig: MockingConfig = {
+export const mockConfig: MockingConfig = {
   mocks: handlers,
   swagger: [
     {
