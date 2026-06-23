@@ -10,7 +10,7 @@ export const mockConfig: MockingConfig = {
       name: 'Petstore',
       docsUrl: 'https://petstore3.swagger.io',
       configUrl: `${BASE_ENDPOINT}/openapi.json`,
-      serverUrl: BASE_ENDPOINT
+      serverUrl: BASE_ENDPOINT,
     },
   ],
 };
