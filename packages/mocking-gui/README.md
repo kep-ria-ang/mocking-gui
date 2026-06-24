@@ -6,7 +6,7 @@ Mocking GUI is a GUI library based on MSW (Mock Service Worker) that provides a 
 
 - **MSW Integration**: Zero-config mocking based on MSW.
 - **GUI Control**: Toggle mocks, change response variants, and inject delays in real-time.
-- **Swagger/OpenAPI Support**: Automatically generate mocks from Swagger JSON.
+- **Swagger/OpenAPI Support**: Auto-generate realistic response mocks from Swagger/OpenAPI specifications
 - **Shareable Scenarios**: Group specific mock states into "Scenarios" for easy reproduction.
 - **Server-side Sync**: Sync browser mock state to server components via cookies (prevents Hydration errors).
 

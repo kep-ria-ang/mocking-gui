@@ -8,8 +8,9 @@ Connect your Swagger Config URL, and config-based handlers will be **automatical
 ## Overview
 
 - Swagger-based handlers are useful for **Status Code-centric testing** (e.g., UI state transitions or error message displays based on response codes).
-- They rely on example responses defined in the Swagger spec and do not automatically generate dynamic body content.
-- However, you can easily extract manual handler code via **JSON Convert** if you need full customization.
+- Response bodies are **automatically generated** from Swagger schemas.
+- Supports multiple response variants (success, error, edge cases) with proper status codes.
+- You can easily extract manual handler code via **JSON Convert** if you need full customization.
 
 ## Setup
 
@@ -60,12 +61,168 @@ swagger: [
 
 ## How It Works
 
-1. When Mocking GUI starts, it sends a request to `configUrl` from the browser to fetch the Swagger JSON.
-2. It analyzes the fetched specification and automatically generates Mock Handlers for all API endpoints.
-3. The generated handlers can be viewed in the **Mocking GUI Panel > Swagger Tab**.
-4. Each handler is set to return a `Success (200)` response by default, and you can configure error responses or delays in the panel.
+### Data Flow
+
+```
+Swagger JSON (OpenAPI spec)
+       ↓
+Parse responses section
+       ↓
+For each response status code:
+  ├─ Extract schema from 'application/json' or '*/*'
+  ├─ Generate realistic mock data using openapi-sampler
+  ├─ Handle $ref resolution (circular references, nested schemas)
+  └─ Create response variant with:
+      • status code
+      • response body (JSON)
+      • headers (if defined)
+       ↓
+Display in Mocking GUI Panel
+```
+
+### Step-by-Step Process
+
+1. **Load Swagger**: When Mocking GUI starts, it fetches the Swagger/OpenAPI JSON from `configUrl`.
+
+2. **Parse Responses**: For each API endpoint, it extracts all response definitions from the spec.
+
+3. **Generate Mock Bodies**: 
+   - Analyzes the response schema (e.g., `#/components/schemas/User`)
+   - Automatically resolves `$ref` references
+   - Generates realistic JSON mock data that matches the schema structure
+   - Supports complex nested objects and arrays
+
+4. **Create Handlers**: Generates mock handlers for all endpoints with:
+   - All defined response statuses (200, 400, 404, 500, etc.)
+   - Realistic response bodies for each status
+   - Optional: headers defined in the spec
+
+5. **View in Panel**: Generated handlers appear in **Mocking GUI Panel > Swagger Tab** where you can:
+   - Switch between different response variants
+   - Inject delays for network simulation
+   - Toggle handlers on/off
+   - View the actual response body being served
+
+## Response Body Handling
+
+### Content-Type Priority
+
+When a Swagger response defines multiple content types, Mocking GUI uses the following priority:
+
+```
+┌─────────────────────────────────────┐
+│ Priority 1: application/json        │ ← Standard format
+│   • 95% of modern APIs               │
+│   • Generates realistic JSON mocks   │
+└─────────────────────────────────────┘
+                    ↓
+┌─────────────────────────────────────┐
+│ Priority 2: */* (wildcard)          │ ← Fallback
+│   • Legacy APIs or untyped responses │
+│   • Treated as application/json      │
+└─────────────────────────────────────┘
+```
+
+**Example:**
+```json
+{
+  "responses": {
+    "200": {
+      "content": {
+        "application/json": {        // ← Used
+          "schema": { "$ref": "#/components/schemas/User" }
+        },
+        "application/xml": {         // ← Ignored
+          "schema": { ... }
+        }
+      }
+    }
+  }
+}
+```
+
+### Schema Resolution
+
+Mocking GUI automatically resolves complex schema references:
+
+```typescript
+// Swagger spec
+{
+  "responses": {
+    "200": {
+      "content": {
+        "application/json": {
+          "schema": { "$ref": "#/components/schemas/User" }  // ← Reference
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer" },
+          "name": { "type": "string" },
+          "email": { "type": "string", "format": "email" },
+          "roles": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/Role" }
+          }
+        }
+      },
+      "Role": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer" },
+          "name": { "type": "string" }
+        }
+      }
+    }
+  }
+}
+
+// Generated mock response body
+{
+  "id": 1,
+  "name": "John Doe",
+  "email": "john@example.com",
+  "roles": [
+    { "id": 1, "name": "admin" },
+    { "id": 2, "name": "user" }
+  ]
+}
+```
+
+### Error Responses
+
+All status codes defined in the Swagger spec generate appropriate mock data:
+
+```json
+{
+  "responses": {
+    "200": {
+      "description": "Successful response",
+      "content": { "application/json": { ... } }
+    },
+    "400": {
+      "description": "Bad request",
+      "content": { "application/json": { ... } }
+    },
+    "404": {
+      "description": "Not found",
+      "content": { "application/json": { ... } }
+    }
+  }
+}
+```
+
+Each status code generates a separate mock handler with appropriate response body, allowing you to test error scenarios and edge cases.
+
+---
 
 ## Caveats
 
 - **CORS**: The address specified in `configUrl` must be directly accessible from the browser, and CORS must be configured.
 - **JSON Format**: Currently, it supports the JSON format of the OpenAPI 3.0+ specification.
+- **Content-Type**: Only `application/json` and `*/*` content types are supported for mock body generation. Other formats (XML, CSV, etc.) are not currently supported.
