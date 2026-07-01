@@ -73,9 +73,10 @@ export const convertSwaggerToHandlers = (baseUrl: string, swagger: OpenAPI): Han
         const variantName = res?.description || statusCode;
 
         // Priority: OpenAPI 3.0 (application/json -> First content type) > Swagger 2.0
-        const schema = res?.content?.['application/json']?.schema
-          ?? Object.values(res?.content ?? {})[0]?.schema
-          ?? res?.schema;
+        const schema =
+          res?.content?.['application/json']?.schema ??
+          Object.values(res?.content ?? {})[0]?.schema ??
+          res?.schema;
 
         let body: JsonBodyType | undefined;
         if (schema && typeof schema === 'object') {
