@@ -61,7 +61,7 @@ const useSetupMockingGUIWorker = (config: MockingConfig = {}) => {
         } catch (err) {
           console.error('[MockingGUI] Failed to setup worker:', err);
           setError(err as Error);
-          throw error;
+          throw err;
         }
       }
     };
@@ -81,7 +81,7 @@ const useSetupMockingGUIWorker = (config: MockingConfig = {}) => {
     if (isWorkerReady && isHandlersReady && worker) {
       try {
         const convertedMswHandlers = convertToMswHandler(storeHandlers, handlerConfigs);
-        // Merge mocking-gui handlers with on-demand (e.g. GraphQL) handlers
+       // Merge mocking-gui handlers with on-demand (e.g. GraphQL) handlers
         worker.resetHandlers(...convertedMswHandlers, ...onDemandHandlers);
         setIsMockingReady(true);
       } catch (error) {
