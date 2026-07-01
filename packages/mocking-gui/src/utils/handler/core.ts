@@ -52,14 +52,14 @@ export const initialStoredHandlerVariants = (handler: HandlerState): StoredHandl
   const determinedType = determineHandlerType(handler);
 
   return {
-    active: false,
+    active: true,
     type: determinedType,
     variant:
       determinedType === HandlerType.MANUAL
-        ? handler.responseVariants?.[0].name
+        ? handler.responseVariants?.[0]?.name
         : determinedType === HandlerType.SWAGGER
-          ? handler.swaggerResponseVariants?.[0].name
-          : undefined, // Set default to the first variant for manual or swagger types
+          ? handler.swaggerResponseVariants?.[0]?.name
+          : undefined,
     delay: 0,
   };
 };
@@ -87,10 +87,10 @@ export const validateAndUpdateStoredConfig = (
       type: determinedType,
       variant:
         determinedType === HandlerType.MANUAL
-          ? handler.responseVariants?.[0].name
+          ? handler.responseVariants?.[0]?.name
           : determinedType === HandlerType.SWAGGER
-            ? handler.swaggerResponseVariants?.[0].name
-            : undefined, // Set default to the first variant for manual or swagger types
+            ? handler.swaggerResponseVariants?.[0]?.name
+            : undefined,
     };
   }
 
@@ -104,7 +104,7 @@ export const validateAndUpdateStoredConfig = (
 
     // If selected variant does not exist, set default to the first variant
     if (!isExistVariant) {
-      updateConfig.variant = handler.responseVariants?.[0].name;
+      updateConfig.variant = handler.responseVariants?.[0]?.name;
     }
   }
 
@@ -117,7 +117,7 @@ export const validateAndUpdateStoredConfig = (
     ).length;
 
     if (!isExistVariant) {
-      updateConfig.variant = handler.swaggerResponseVariants?.[0].name;
+      updateConfig.variant = handler.swaggerResponseVariants?.[0]?.name;
     }
   }
 
