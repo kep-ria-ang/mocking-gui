@@ -22,7 +22,10 @@ export const loadSwaggerHandlers = async (
     const configJson = (await res.json()) as OpenAPI;
     return convertSwaggerToHandlers(baseUrl, configJson);
   } catch (err) {
-    console.warn(`[MockingGUI] Failed to load swagger handlers from ${configUrl}`);
+    const message = err instanceof Error ? err.message : String(err);
+    console.warn(
+      `[MockingGUI] Failed to load swagger handlers from ${configUrl}: ${message}`
+    );
     throw err;
   }
 };
