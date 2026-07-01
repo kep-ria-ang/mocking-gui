@@ -1,7 +1,7 @@
 import { PropsWithChildren, useEffect, useLayoutEffect, useRef, useState } from 'react';
 
-import { panelZIndex } from '@constants/zIndex';
 import { createPortal } from 'react-dom';
+import { panelZIndex } from '@constants/zIndex';
 
 import { ShadowContainerContext } from './shadowContext';
 

@@ -1,8 +1,8 @@
-import { HandlerType } from '@mocking-gui-types/handler'
+import { HandlerType } from '@mocking-gui-types/handler';
 
-import { COOKIE_KEY, getCookie } from '../browser/cookie'
+import { COOKIE_KEY, getCookie } from '../browser/cookie';
 
-import type { StoredHandlerVariants } from '@mocking-gui-types/handler'
+import type { StoredHandlerVariants } from '@mocking-gui-types/handler';
 /**
  * Retrieves multi-cookie value from cookie string.
  * Supports both single cookie (mocking_gui_sync) and split cookies (mocking_gui_sync_0, _1, etc.)
@@ -77,8 +77,8 @@ export const reconstructHandlerConfigsFromCookie = (
   } catch (error) {
     console.error(
       '[MockingGUI] Failed to parse mocking_gui_sync cookie. ' +
-      'This may indicate a corrupted or malformed cookie. ' +
-      'SSR will use default handler configurations.',
+        'This may indicate a corrupted or malformed cookie. ' +
+        'SSR will use default handler configurations.',
       error,
     );
     // Return baseConfigs on error (graceful fallback)
