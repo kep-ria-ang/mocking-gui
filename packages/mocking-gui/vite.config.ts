@@ -90,5 +90,10 @@ export default defineConfig(({ mode }: ConfigEnv) => {
     };
   }
 
-  return config;
+  return {
+    ...config,
+    test: {
+      globals: true,
+    },
+  };
 });
