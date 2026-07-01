@@ -63,7 +63,7 @@ export const syncStateToCookie = (handlerConfigs: Record<string, StoredHandlerVa
       // Tier 3: Size limit exceeded (>10000 bytes)
       throw new Error(
         `[MockingGUI] Mocking state too large (${encoded.length} bytes). ` +
-        'Consider reducing the number of handlers or using feature flags.',
+          'Consider reducing the number of handlers or using feature flags.',
       );
     }
   } catch (error) {
