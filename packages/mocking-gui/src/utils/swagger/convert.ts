@@ -13,8 +13,11 @@ type OpenAPIMediaType = {
 
 type OpenAPIResponse = {
   description?: string;
+  // OpenAPI 3.0 spec
   content?: Record<string, OpenAPIMediaType>;
   headers?: Record<string, unknown>;
+  // Swagger 2.0 spec
+  schema?: OpenAPISchema;
 };
 
 type OpenAPIOperation = {
@@ -69,11 +72,14 @@ export const convertSwaggerToHandlers = (baseUrl: string, swagger: OpenAPI): Han
       const swaggerResponseVariants = Object.entries(responses).map(([statusCode, res]) => {
         const variantName = res?.description || statusCode;
 
-        let body: JsonBodyType | undefined;
-        const schema = res?.content?.['application/json']?.schema ?? res?.content?.['*/*']?.schema;
+        // Get schema from response: application/json > first content type > Swagger 2.0 schema fallback
+        const schema = res?.content?.['application/json']?.schema
+          ?? Object.values(res?.content ?? {})[0]?.schema
+          ?? res?.schema;
 
+        let body: JsonBodyType | undefined;
         if (schema && typeof schema === 'object') {
-          body = generateMockFromSchema(schema as OpenAPISchema, swagger) as JsonBodyType;
+          body = generateMockFromSchema(schema, swagger) as JsonBodyType;
         }
 
         return {
