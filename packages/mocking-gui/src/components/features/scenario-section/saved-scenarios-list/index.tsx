@@ -105,7 +105,8 @@ const SavedScenariosList = () => {
           setIsImportSectionVisible(false);
         }
       } catch (err) {
-        setImportErrorMessage('Failed to parse JSON file.');
+        const message = err instanceof Error ? err.message : 'Unknown error';
+        setImportErrorMessage(`Failed to parse JSON file: ${message}`);
       }
     },
     [importScenario],
