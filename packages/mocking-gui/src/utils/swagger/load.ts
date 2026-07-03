@@ -23,9 +23,7 @@ export const loadSwaggerHandlers = async (
     return convertSwaggerToHandlers(baseUrl, configJson);
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
-    console.warn(
-      `[MockingGUI] Failed to load swagger handlers from ${configUrl}: ${message}`
-    );
+    console.warn(`[MockingGUI] Failed to load swagger handlers from ${configUrl}: ${message}`);
     throw err;
   }
 };
