@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 
 import { FileJson } from 'lucide-react';
 
+import { HandlerType } from '@mocking-gui-types/handler';
 import APIResponseDetail from './APIResponseDetail';
 
 import type { APIItemProps } from '.';
@@ -19,7 +20,12 @@ type APIItemDetailProps = {
 const APIItemDetail = (props: APIItemDetailProps) => {
   const { apiGroup, handlerConfig } = props;
 
-  const currentVariant = apiGroup.responseVariants?.find(
+  const variantsArray =
+    handlerConfig.type === HandlerType.SWAGGER
+      ? apiGroup.swaggerResponseVariants
+      : apiGroup.responseVariants;
+
+  const currentVariant = variantsArray?.find(
     variant => variant.name === handlerConfig.variant,
   ) as HandlerResponseVariant;
 
@@ -43,8 +49,6 @@ const APIItemDetail = (props: APIItemDetailProps) => {
       return '';
     }
   }, [body, rawBody]);
-
-  console.log(responseBodyJson, body, rawBody);
   return (
     <section className="w-full px-8 py-2" aria-labelledby="response-details-heading">
       <div className="flex items-center justify-between py-1">

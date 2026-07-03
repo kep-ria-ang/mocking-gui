@@ -35,36 +35,4 @@ export const handlers: HandlerConfigOption[] = [
       },
     ],
   },
-  {
-    name: 'Get User Report',
-    description: 'Raw body response examples',
-    url: `${BASE_ENDPOINT}/user/:username/report`,
-    method: 'get',
-    responseVariants: [
-      {
-        name: 'Text',
-        status: 200,
-        rawBody: {
-          kind: 'text',
-          value: "User report for 'ria' (role=ADMIN)",
-        },
-      },
-      {
-        name: 'HTML',
-        status: 200,
-        rawBody: {
-          kind: 'html',
-          value: '<h1>User Report</h1><p>Username: Ria</p>',
-        },
-      },
-      {
-        name: 'XML',
-        status: 200,
-        rawBody: {
-          kind: 'html',
-          value: '<user><name>Ria</name><role>Admin</role></user>',
-        },
-      },
-    ],
-  },
 ];

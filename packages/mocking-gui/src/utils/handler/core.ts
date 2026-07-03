@@ -30,11 +30,11 @@ export const determineHandlerType = (
 ): HandlerType | null => {
   if (currentType && isHandlerTypeValid(handler, currentType)) return currentType;
 
-  // Priority 1: Check responseVariants → MANUAL
-  if (handler.responseVariants?.length) return HandlerType.MANUAL;
-
-  // Priority 2: Check responseVariantsFn → AUTO
+  // Priority 1: Check responseVariantsFn → AUTO
   if (handler.responseVariantsFn) return HandlerType.AUTO;
+
+  // Priority 2: Check responseVariants → MANUAL
+  if (handler.responseVariants?.length) return HandlerType.MANUAL;
 
   // Priority 3: Check Swagger-based handler → SWAGGER
   if (handler.swaggerResponseVariants?.length) return HandlerType.SWAGGER;

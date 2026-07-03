@@ -8,8 +8,9 @@ Connect your Swagger Config URL, and config-based handlers will be **automatical
 ## Overview
 
 - Swagger-based handlers are useful for **Status Code-centric testing** (e.g., UI state transitions or error message displays based on response codes).
-- They rely on example responses defined in the Swagger spec and do not automatically generate dynamic body content.
-- However, you can easily extract manual handler code via **JSON Convert** if you need full customization.
+- Response bodies are **automatically generated** from Swagger schemas.
+- Supports multiple response variants (success, error, edge cases) with proper status codes.
+- You can easily extract manual handler code via **JSON Convert** if you need full customization.
 
 ## Setup
 

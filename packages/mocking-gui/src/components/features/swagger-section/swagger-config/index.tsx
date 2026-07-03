@@ -35,10 +35,10 @@ const SwaggerConfigSection = () => {
         count: undefined,
       });
       try {
-        const list = await loadSwaggerHandlers(url);
+        const swaggerHandlers = await loadSwaggerHandlers(url);
         updateSwaggerSource(url, {
           status: STATUS.SUCCESS,
-          count: list.length,
+          count: swaggerHandlers.length,
           errorMessage: undefined,
         });
       } catch (e) {

@@ -61,7 +61,7 @@ const useSetupMockingGUIWorker = (config: MockingConfig = {}) => {
         } catch (err) {
           console.error('[MockingGUI] Failed to setup worker:', err);
           setError(err as Error);
-          throw error;
+          throw err;
         }
       }
     };
