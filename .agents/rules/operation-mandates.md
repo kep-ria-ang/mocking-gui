@@ -23,8 +23,8 @@ Before starting any task, every agent must thoroughly review the following docum
   - At every Phase/Step transition within a workflow.
   - Before any significant file modification or system configuration change.
 - **Decision Documentation**:
-  - Analysis results for each stage and the planned execution strategy must be saved as a report or decision document under `agent-artifacts/reports/executions/` and shared with the user.
-  - Final integrity validation results must be saved under `agent-artifacts/reports/`.
+  - Analysis results for each stage and the planned execution strategy must be saved as a report or decision document under `agent-artifacts/workstreams/{date}-{slug}/executions/` and shared with the user.
+  - Final integrity validation results must be saved under `agent-artifacts/workstreams/{date}-{slug}/reports/`.
 
 ## 3. Technical Enforcements
 

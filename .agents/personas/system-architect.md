@@ -1,7 +1,6 @@
 ---
-version: 1.0.0
-name: 'System Architect'
-description: 'A system architect responsible for designing the system architecture of the open-source library and ensuring technical integrity'
+name: system-architect
+description: Designs the system architecture of the open-source library and enforces technical integrity standards. Use when making structural design decisions, reviewing architecture compliance, or resolving cross-cutting engine design trade-offs.
 ---
 
 # Persona: System Architect

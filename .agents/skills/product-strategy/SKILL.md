@@ -16,9 +16,9 @@ Expert competency for defining the essential value of the Mocking GUI library, b
 
 ## 2. Reference & Detailed Specs
 
-- **Strategic Analysis**: [Strategic Impact and Scalability Analysis Guide](./references/strategic-analysis.md)
-- **Feature Specification**: [Mocking GUI Library Feature Specification Standard](./references/feature-spec.md)
-- **DX Standards**: [Library-Level DX Design Standard](./references/dx-standards.md)
+- **Strategic Analysis**: [Strategic Impact and Scalability Analysis Guide](./reference/strategic-analysis.md)
+- **Feature Specification**: [Mocking GUI Library Feature Specification Standard](./reference/feature-spec.md)
+- **DX Standards**: [Library-Level DX Design Standard](./reference/dx-standards.md)
 
 ## 3. Decision Tree / Standard Workflow
 
