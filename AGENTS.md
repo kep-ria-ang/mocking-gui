@@ -9,7 +9,7 @@ This guide defines the collaborative framework for the specialist agents respons
 The core engineering group responsible for the quality and architectural consistency of the open-source library itself.
 
 - **📐 [System Architect](.agents/personas/system-architect.md)**: Leads system structure design and architecture standard reviews.
-- **📝 [Product Planner](.agents/personas/product-planner.md)**: Handles product planning, scenario design, and specification authoring (drafted at `agent-artifacts/workstreams/{run}/spec.md`; promoted to `agent-artifacts/specs/active/` on approval).
+- **📝 [Product Planner](.agents/personas/product-planner.md)**: Handles product planning, scenario design, and specification authoring (drafted at `agent-artifacts/workstreams/{run}/spec.md`; promoted to `agent-artifacts/specs/{feature}.md` on approval).
 - **🛠️ [Frontend Engineer](.agents/personas/frontend-engineer.md)**: Implements core features and develops the intelligent simulation engine.
 - **🔍 [Testing Specialist](.agents/personas/testing-specialist.md)**: Operates the integrated quality gate and produces integrity reports (`agent-artifacts/workstreams/{run}/reports/`).
 - **🚀 [Release Manager](.agents/personas/release-manager.md)**: Manages automated documentation sync and official releases.
