@@ -8,6 +8,9 @@ jobs:
   auto-assign:
     runs-on: ubuntu-latest
     if: github.event.pull_request.draft == false
+    permissions:
+      contents: read
+      pull-requests: write
     steps:
       - uses: kentaro-m/auto-assign-action@v2.0.0
         with:
