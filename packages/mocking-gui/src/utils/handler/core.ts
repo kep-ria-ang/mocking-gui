@@ -52,7 +52,7 @@ export const initialStoredHandlerVariants = (handler: HandlerState): StoredHandl
   const determinedType = determineHandlerType(handler);
 
   return {
-    active: true,
+    active: false,
     type: determinedType,
     variant:
       determinedType === HandlerType.MANUAL
