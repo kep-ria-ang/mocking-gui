@@ -31,9 +31,9 @@ created_by: user@organization.com
 
 ## 5. Approval
 
-| Item     | Value                                    |
-| -------- | ---------------------------------------- |
-| Decision | approved / rejected / changes_requested |
-| Approver | user@organization.com                  |
-| Time     | YYYY-MM-DDTHH:mm:ss+09:00                |
+| Item      | Value                                   |
+| --------- | --------------------------------------- |
+| Decision  | approved / rejected / changes_requested |
+| Approver  | user@organization.com                   |
+| Time      | YYYY-MM-DDTHH:mm:ss+09:00               |
 | Rationale | (one or two sentences)                  |

@@ -19,10 +19,10 @@ This document summarizes the implementation results for resolving the three issu
 
 Two files were modified.
 
-| File | Changes |
-| --- | --- |
+| File                                               | Changes                                                                                                                               |
+| -------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
 | `packages/mocking-gui/src/utils/browser/cookie.ts` | Removed debounce, added 3-tier size handling, implemented multi-cookie split (`syncMultiCookie`), and added try-catch error handling. |
-| `packages/mocking-gui/src/utils/server/state.ts` | Implemented multi-cookie reconstruction (`getMultiCookieValue`), added parsing error handling and fallback to baseConfigs. |
+| `packages/mocking-gui/src/utils/server/state.ts`   | Implemented multi-cookie reconstruction (`getMultiCookieValue`), added parsing error handling and fallback to baseConfigs.            |
 
 ### 1.1 Debounce Removal (Issue #1)
 

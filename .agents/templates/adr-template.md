@@ -1,8 +1,8 @@
 ---
 version: 1.0.0
-name: "ADR Template - Architecture Decision Record"
+name: 'ADR Template - Architecture Decision Record'
 type: template
-description: "Standard template for documenting technical decisions"
+description: 'Standard template for documenting technical decisions'
 ---
 
 # ADR-NNN: [Title: Technical Choice or Decision]
@@ -18,11 +18,13 @@ description: "Standard template for documenting technical decisions"
 ## Context
 
 ### Background (Why?)
+
 - Why did this decision need to be made?
 - What problem needed to be solved?
 - What are the technical constraints?
 
 **Example**:
+
 ```
 Server state needs to be synchronized to the client in an SSR environment.
 Options:
@@ -32,6 +34,7 @@ Options:
 ```
 
 ### Technical Evaluation Criteria
+
 - Performance: [Importance]
 - Compatibility: [Importance]
 - Implementation complexity: [Importance]
@@ -58,6 +61,7 @@ Options:
    - Metrics/evidence: [Concrete data]
 
 **Example**:
+
 ```
 We choose SessionStorage.
 
@@ -81,20 +85,20 @@ Rationale:
 
 ✅ **[Outcome 1]**: [Description]  
 ✅ **[Outcome 2]**: [Description]  
-✅ **[Outcome 3]**: [Description]  
+✅ **[Outcome 3]**: [Description]
 
 ### Negative Impact (Cons)
 
 ❌ **[Risk 1]**: [Description]  
 ❌ **[Risk 2]**: [Description]  
-❌ **[Risk 3]**: [Description]  
+❌ **[Risk 3]**: [Description]
 
 ### Mitigations
 
 How will each risk be mitigated?
 
-| Risk | Severity | Mitigation Strategy |
-|--------|--------|---------|
+| Risk     | Severity        | Mitigation Strategy |
+| -------- | --------------- | ------------------- |
 | [Risk 1] | High/Medium/Low | [Mitigation method] |
 | [Risk 2] | High/Medium/Low | [Mitigation method] |
 
@@ -107,10 +111,12 @@ How will each risk be mitigated?
 **Description**: [Technical description]
 
 **Pros**:
+
 - [Pro 1]
 - [Pro 2]
 
 **Cons**:
+
 - [Con 1]
 - [Con 2]
 
@@ -135,6 +141,7 @@ How will each risk be mitigated?
 - [ADR-KKK]: [Title] (considered as an alternative)
 
 **Example**:
+
 ```
 - ADR-001: State Model - SessionStorage chosen
   └─ ADR-002: Promise Ordering (implementation approach, depends on this choice)
@@ -168,10 +175,10 @@ How will you monitor after deployment?
 
 ## Decision Log
 
-| Date/Time | Owner | Action | Result |
-|------|--------|------|------|
+| Date/Time        | Owner  | Action                                               | Result                          |
+| ---------------- | ------ | ---------------------------------------------------- | ------------------------------- |
 | YYYY-MM-DD HH:MM | [Name] | [Decision-making process (discussion, review, etc.)] | [Approved/Rejected/Conditional] |
-| | | | |
+|                  |        |                                                      |                                 |
 
 ---
 
@@ -186,11 +193,11 @@ How will you monitor after deployment?
 
 ## Approval
 
-| Role | Status | Date | Notes |
-|------|--------|------|-------|
-| Product Manager | Approved | YYYY-MM-DD | |
-| Technical Lead | Approved | YYYY-MM-DD | |
-| Architecture | Approved | YYYY-MM-DD | |
+| Role            | Status   | Date       | Notes |
+| --------------- | -------- | ---------- | ----- |
+| Product Manager | Approved | YYYY-MM-DD |       |
+| Technical Lead  | Approved | YYYY-MM-DD |       |
+| Architecture    | Approved | YYYY-MM-DD |       |
 
 ---
 

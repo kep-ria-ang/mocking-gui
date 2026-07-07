@@ -44,13 +44,13 @@ The target code is `syncStateToCookie()` in `utils/browser/cookie.ts` and the `u
 
 The decisive constraint was that the **SSR server must be able to read the latest value**. Storage candidates were evaluated based on this criterion.
 
-| Candidate | SSR Server Access | 100+ Handlers | Additional Request | Sync Delay | Verdict |
-| --- | --- | --- | --- | --- | --- |
-| **HTTP Cookie (Improved)** | ✅ | ✅ (multi-cookie) | Not Required | <1ms | **Adopted** |
-| URL Query String | △ | ❌ (~2KB) | Not Required | <1ms | Unsuitable (size limit, UX history pollution) |
-| localStorage / sessionStorage | ❌ | ✅ | Required | N/A | Impossible (client-only) |
-| IndexedDB | ❌ | ✅ | Required | N/A | Impossible (client-only) |
-| Server-Side Session | ✅✅ | ✅ | Required (100–300ms) | 100–300ms | Over-engineering (complexity, scalability) |
+| Candidate                     | SSR Server Access | 100+ Handlers     | Additional Request   | Sync Delay | Verdict                                       |
+| ----------------------------- | ----------------- | ----------------- | -------------------- | ---------- | --------------------------------------------- |
+| **HTTP Cookie (Improved)**    | ✅                | ✅ (multi-cookie) | Not Required         | <1ms       | **Adopted**                                   |
+| URL Query String              | △                 | ❌ (~2KB)         | Not Required         | <1ms       | Unsuitable (size limit, UX history pollution) |
+| localStorage / sessionStorage | ❌                | ✅                | Required             | N/A        | Impossible (client-only)                      |
+| IndexedDB                     | ❌                | ✅                | Required             | N/A        | Impossible (client-only)                      |
+| Server-Side Session           | ✅✅              | ✅                | Required (100–300ms) | 100–300ms  | Over-engineering (complexity, scalability)    |
 
 **Conclusion**: Cookie is the only low-cost standard technology that the server can read directly from HTTP headers without additional requests. localStorage/IndexedDB fail to meet the core SSR requirement (server accessibility), and Server Session introduces excessive performance and complexity costs. Query String was eliminated due to size limits and UX issues.
 
@@ -76,13 +76,13 @@ We adopt a **Cookie-based approach with 3 improvements**. Detailed code design a
 
 ## 4. Remaining Risks
 
-| Risk | Level | Mitigation |
-| --- | --- | --- |
-| Increased request header size due to multi-cookie | Low | Split only when necessary (>3800 bytes, which is rare). Single cookie for typical cases (~0.02% overhead). |
-| Server-side reconstruction errors | Low | Clear parsing logic + unit tests. Safe fallback to empty state on failure. |
-| Excessive writes due to debounce removal | Very Low | <0.1ms per write, negligible compared to network latency. |
-| State exceeding 10KB+ | Med | Explicit error at Tier ceiling + documentation guide on "reducing handlers/feature flags". |
-| Browser compatibility | Very Low | Multi-cookie is a standard feature supported by all browsers. |
+| Risk                                              | Level    | Mitigation                                                                                                 |
+| ------------------------------------------------- | -------- | ---------------------------------------------------------------------------------------------------------- |
+| Increased request header size due to multi-cookie | Low      | Split only when necessary (>3800 bytes, which is rare). Single cookie for typical cases (~0.02% overhead). |
+| Server-side reconstruction errors                 | Low      | Clear parsing logic + unit tests. Safe fallback to empty state on failure.                                 |
+| Excessive writes due to debounce removal          | Very Low | <0.1ms per write, negligible compared to network latency.                                                  |
+| State exceeding 10KB+                             | Med      | Explicit error at Tier ceiling + documentation guide on "reducing handlers/feature flags".                 |
+| Browser compatibility                             | Very Low | Multi-cookie is a standard feature supported by all browsers.                                              |
 
 **Open/Follow-up**: The "cache invalidation" item in the final specification was mentioned as a candidate for the 3rd root cause in early analyses but was not finalized in Phase 1. It is left as a candidate for hybrid storage in Phase 2+.
 

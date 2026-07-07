@@ -65,16 +65,16 @@ Stress test (1000 consecutive changes): 1000 writes × 0.1ms = 100ms accumulated
 
 ✅ SSR/CSR synchronization latency 300ms → 0ms  
 ✅ Latest state reflected even during fast navigation (50ms)  
-✅ Improved code clarity by removing the "magic number 300ms"  
+✅ Improved code clarity by removing the "magic number 300ms"
 
 ### Negative Impact (Cons)
 
-❌ Theoretical increase in cookie write count (during consecutive changes)  
+❌ Theoretical increase in cookie write count (during consecutive changes)
 
 ### Mitigations
 
-| Risk | Severity | Mitigation |
-|--------|--------|---------|
+| Risk                                                 | Severity | Mitigation                                                                                                             |
+| ---------------------------------------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------- |
 | Performance degradation due to increased write count | Very Low | Measured overhead of <0.1ms per write is negligible compared to network latency. Monitor for regression via benchmarks |
 
 ---

@@ -16,20 +16,20 @@ description: 'Log of updated documents and knowledge base synchronization activi
 
 ## 1. Inputs (Reads)
 
-| Input | Purpose |
-| :---- | :------ |
-| `reports/integrity-report.md` | Evidence of verification results |
-| `spec.md` | Reference for feature scope and usage |
-| Modified API interfaces (`cookie.ts`, `state.ts`) | Validation of briefing details |
+| Input                                             | Purpose                               |
+| :------------------------------------------------ | :------------------------------------ |
+| `reports/integrity-report.md`                     | Evidence of verification results      |
+| `spec.md`                                         | Reference for feature scope and usage |
+| Modified API interfaces (`cookie.ts`, `state.ts`) | Validation of briefing details        |
 
 ---
 
 ## 2. Updated Documents List
 
-| Document | Type | Status | Remarks |
-| :--- | :--- | :--- | :--- |
-| `reports/release-briefing.md` | Release Briefing | ✅ New | Phase 4 contract artifact (user-facing). Integrates feature summary, usage, FAQ, and maintenance pointers into a single document. |
-| `agent-artifacts/specs/ssr-state-sync.md` | Active Specification | ✅ Promoted | Promoted from `spec.md` during Run Closure. |
+| Document                                  | Type                 | Status      | Remarks                                                                                                                           |
+| :---------------------------------------- | :------------------- | :---------- | :-------------------------------------------------------------------------------------------------------------------------------- |
+| `reports/release-briefing.md`             | Release Briefing     | ✅ New      | Phase 4 contract artifact (user-facing). Integrates feature summary, usage, FAQ, and maintenance pointers into a single document. |
+| `agent-artifacts/specs/ssr-state-sync.md` | Active Specification | ✅ Promoted | Promoted from `spec.md` during Run Closure.                                                                                       |
 
 > The user guide, developer guide, and FAQ were integrated into the Release Briefing instead of being split into separate stubs. Since there were no breaking changes, `MIGRATION.md` was not created and was replaced by the "Migration/Usage Pointers" section within the Release Briefing.
 
@@ -52,4 +52,4 @@ Verified that the Phase 4 contract deliverables (`reports/release-briefing.md`, 
 
 **Documentation Completed**: 2026-07-04  
 **Written By**: Release Manager (Claude)  
-**Next Step**: Phase 4 Final Gate Approval and Run Closure  
+**Next Step**: Phase 4 Final Gate Approval and Run Closure

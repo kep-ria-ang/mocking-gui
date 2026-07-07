@@ -15,9 +15,9 @@ This pipeline is a 4-phase specialized process optimized for developing and enha
 
 ### 🚀 Run Initialization (before Phase 1)
 
-| Action     | Detail                                                                                              |
-| :--------- | :--------------------------------------------------------------------------------------------------- |
-| **Create** | `workstreams/{date}-{slug}/manifest.yaml` from `.agents/templates/manifest-template.yaml`          |
+| Action     | Detail                                                                                                               |
+| :--------- | :------------------------------------------------------------------------------------------------------------------- |
+| **Create** | `workstreams/{date}-{slug}/manifest.yaml` from `.agents/templates/manifest-template.yaml`                            |
 | **Decide** | Run size: **full run** (new feature / architecture change) vs **light run** (single `RUN.md`, see STRUCTURE.md §2.2) |
 
 All paths below are relative to `agent-artifacts/workstreams/{date}-{slug}/` unless prefixed with `agent-artifacts/`.
@@ -28,13 +28,13 @@ All paths below are relative to `agent-artifacts/workstreams/{date}-{slug}/` unl
 
 Performs planning and technical feasibility validation for new or improved features.
 
-| Item                   | Detail                                                                        |
-| :--------------------- | :----------------------------------------------------------------------------- |
-| **Responsible Agents** | `product-planner`, `system-architect`                                          |
-| **Active Skills**      | `product-strategy`, `handler-specification`                                    |
+| Item                   | Detail                                                                                                                                                                                                                                     |
+| :--------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Responsible Agents** | `product-planner`, `system-architect`                                                                                                                                                                                                      |
+| **Active Skills**      | `product-strategy`, `handler-specification`                                                                                                                                                                                                |
 | **Reads**              | User requirements, issue reports, `agent-artifacts/specs/` (related existing specs), `agent-artifacts/decisions/INDEX.md` (existing accepted ADRs — if the new design conflicts with one, a superseding ADR MUST be written in this phase) |
-| **Writes**             | `spec.md` (draft planning & architecture agreement) · `executions/phase1-analysis.md` (analysis log) · `agent-artifacts/decisions/ADR-*.md` (one per key technical decision, ids listed in `manifest.yaml`) |
-| **Gate**               | `approvals/phase1-gate.md` — then advance `manifest.yaml` to phase 2           |
+| **Writes**             | `spec.md` (draft planning & architecture agreement) · `executions/phase1-analysis.md` (analysis log) · `agent-artifacts/decisions/ADR-*.md` (one per key technical decision, ids listed in `manifest.yaml`)                                |
+| **Gate**               | `approvals/phase1-gate.md` — then advance `manifest.yaml` to phase 2                                                                                                                                                                       |
 
 > **[Gatekeeper Requirement]**: Report the Phase 1 analysis summary, obtain user approval recorded in `approvals/phase1-gate.md`, then delegate Phase 2 to the `frontend-engineer` persona via the Agent tool.
 
@@ -44,13 +44,13 @@ Performs planning and technical feasibility validation for new or improved featu
 
 Carries out actual implementation and refactoring based on the design.
 
-| Item                   | Detail                                                                        |
-| :--------------------- | :----------------------------------------------------------------------------- |
-| **Responsible Agents** | `frontend-engineer`, `system-architect`                                        |
-| **Active Skills**      | `browser-msw-expert`, `browser-sw-specialist`                                  |
-| **Reads**              | `spec.md` · ADRs listed in `manifest.yaml`                                     |
+| Item                   | Detail                                                                                                                                                                                                                  |
+| :--------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Responsible Agents** | `frontend-engineer`, `system-architect`                                                                                                                                                                                 |
+| **Active Skills**      | `browser-msw-expert`, `browser-sw-specialist`                                                                                                                                                                           |
+| **Reads**              | `spec.md` · ADRs listed in `manifest.yaml`                                                                                                                                                                              |
 | **Writes**             | Pull Request code changes in `packages/mocking-gui` · `executions/phase2-implementation.md` (key changes & implementation strategy) · new `agent-artifacts/decisions/ADR-*.md` for decisions made during implementation |
-| **Gate**               | `approvals/phase2-gate.md` — then advance `manifest.yaml` to phase 3           |
+| **Gate**               | `approvals/phase2-gate.md` — then advance `manifest.yaml` to phase 3                                                                                                                                                    |
 
 > **[Gatekeeper Requirement]**: Report the implementation summary, obtain user approval recorded in `approvals/phase2-gate.md`, then delegate Phase 3 to the `testing-specialist` persona via the Agent tool.
 
@@ -60,13 +60,13 @@ Carries out actual implementation and refactoring based on the design.
 
 Executes the code quality assurance and automated verification pipeline.
 
-| Item                   | Detail                                                                        |
-| :--------------------- | :----------------------------------------------------------------------------- |
-| **Responsible Agents** | `testing-specialist`                                                           |
-| **Active Skills**      | `quality-standard`, `harness-core`                                             |
-| **Reads**              | Implemented source code · `spec.md`                                            |
+| Item                   | Detail                                                                                                                     |
+| :--------------------- | :------------------------------------------------------------------------------------------------------------------------- |
+| **Responsible Agents** | `testing-specialist`                                                                                                       |
+| **Active Skills**      | `quality-standard`, `harness-core`                                                                                         |
+| **Reads**              | Implemented source code · `spec.md`                                                                                        |
 | **Writes**             | `reports/integrity-report.md` (Lint/Vitest/Build gate results, checklist validation) · `executions/phase3-verification.md` |
-| **Gate**               | `approvals/phase3-gate.md` — then advance `manifest.yaml` to phase 4           |
+| **Gate**               | `approvals/phase3-gate.md` — then advance `manifest.yaml` to phase 4                                                       |
 
 > **[Gatekeeper Requirement]**: Present the integrity verification report, obtain user approval recorded in `approvals/phase3-gate.md`, then delegate Phase 4 to the `release-manager` persona via the Agent tool.
 
@@ -76,12 +76,12 @@ Executes the code quality assurance and automated verification pipeline.
 
 Ensures the knowledge base is up to date and prepares the user briefing.
 
-| Item                   | Detail                                                                        |
-| :--------------------- | :----------------------------------------------------------------------------- |
-| **Responsible Agents** | `release-manager`, `system-architect`                                          |
-| **Active Skills**      | `harness-core`                                                                 |
-| **Reads**              | `reports/integrity-report.md` · changed API interfaces                         |
-| **Writes**             | `reports/release-briefing.md` (release briefing for the user) · Docs / agent MD sync · `executions/phase4-documentation.md` |
+| Item                   | Detail                                                                                                                                                                                                                                                                                                                                                      |
+| :--------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Responsible Agents** | `release-manager`, `system-architect`                                                                                                                                                                                                                                                                                                                       |
+| **Active Skills**      | `harness-core`                                                                                                                                                                                                                                                                                                                                              |
+| **Reads**              | `reports/integrity-report.md` · changed API interfaces                                                                                                                                                                                                                                                                                                      |
+| **Writes**             | `reports/release-briefing.md` (release briefing for the user) · Docs / agent MD sync · `executions/phase4-documentation.md`                                                                                                                                                                                                                                 |
 | **Gate**               | `approvals/phase4-gate.md` — final gate. Checklist MUST include two freshness checks: ① Does this change conflict with any `accepted` ADR or active spec? → write the superseding ADR / archive the spec now, in this run. ② Does this change alter what `STRUCTURE.md` / `README.md` describe? → update them in this run (a stale map is worse than none). |
 
 ### 🏁 Run Closure (after Phase 4 approval)

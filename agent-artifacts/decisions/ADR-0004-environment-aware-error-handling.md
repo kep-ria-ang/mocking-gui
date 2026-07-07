@@ -59,19 +59,19 @@ Actual user tickets: "Mocking not working", "Why is the real API being called?",
 
 ✅ Eradicate silent failure (100% error visibility)  
 ✅ Development: fast debugging through immediate failure  
-✅ Production: graceful degradation without crashes  
+✅ Production: graceful degradation without crashes
 
 ### Negative Impact (Cons)
 
 ❌ Development-environment throws may propagate to parent components  
-❌ Negligible overhead from try-catch (<1ms)  
+❌ Negligible overhead from try-catch (<1ms)
 
 ### Mitigations
 
-| Risk | Severity | Mitigation |
-|--------|--------|---------|
-| dev throw propagation | Low | Isolate via subscription callback / error boundary, limited to development environment |
-| Infinite logging in production | Low | Log with clear context (count, source) included, with an optional UI notification if needed |
+| Risk                           | Severity | Mitigation                                                                                  |
+| ------------------------------ | -------- | ------------------------------------------------------------------------------------------- |
+| dev throw propagation          | Low      | Isolate via subscription callback / error boundary, limited to development environment      |
+| Infinite logging in production | Low      | Log with clear context (count, source) included, with an optional UI notification if needed |
 
 ---
 

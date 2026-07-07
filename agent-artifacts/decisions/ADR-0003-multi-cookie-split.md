@@ -66,20 +66,20 @@ In microservice environments (50+ services × 3–5 endpoints = 100–150 handle
 
 ✅ Support for 100+ handlers (practical extension up to 10KB)  
 ✅ Elimination of silent failures → explicit error on overflow (Tier 3)  
-✅ No additional dependencies, backward compatibility maintained  
+✅ No additional dependencies, backward compatibility maintained
 
 ### Negative Effects (Cons)
 
 ❌ Slight increase in HTTP cookie header size in overflow cases  
-❌ Additional server-side reconstruction logic (possibility of parsing errors)  
+❌ Additional server-side reconstruction logic (possibility of parsing errors)
 
 ### Mitigations
 
-| Risk | Severity | Mitigation Strategy |
-|--------|--------|---------|
-| Header size increase | Low | Split only when necessary (>3800 bytes); single cookie for the common case |
-| Server reconstruction errors | Low | Clear parsing logic + validation, safe fallback to baseConfigs on failure |
-| Browser compatibility | Very Low | Multi-cookie is a standard feature across all browsers |
+| Risk                         | Severity | Mitigation Strategy                                                        |
+| ---------------------------- | -------- | -------------------------------------------------------------------------- |
+| Header size increase         | Low      | Split only when necessary (>3800 bytes); single cookie for the common case |
+| Server reconstruction errors | Low      | Clear parsing logic + validation, safe fallback to baseConfigs on failure  |
+| Browser compatibility        | Very Low | Multi-cookie is a standard feature across all browsers                     |
 
 ---
 

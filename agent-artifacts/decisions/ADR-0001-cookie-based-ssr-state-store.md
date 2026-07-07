@@ -64,21 +64,21 @@ In the overall evaluation, Cookie scored the highest at 18/20 (Query 10, localSt
 
 ✅ 100% fulfillment of SSR requirements (server reads directly from the header)  
 ✅ <1ms synchronization, no additional network request  
-✅ Server remains stateless → easy horizontal scaling  
+✅ Server remains stateless → easy horizontal scaling
 
 ### Negative Impact (Cons)
 
 ❌ 4KB size limit per cookie → overflow with 100+ handlers  
 ❌ HttpOnly cannot be used (SSR requires client writes) → XSS exposure surface exists  
-❌ Cache invalidation must be considered when the cookie value changes  
+❌ Cache invalidation must be considered when the cookie value changes
 
 ### Mitigations
 
-| Risk | Severity | Mitigation Strategy |
-|--------|--------|---------|
-| 4KB size limit | High | Extend up to 10KB with Multi-Cookie Split (ADR-0003) |
-| XSS exposure | Medium | Store only non-sensitive, dev-tool-natured state; apply general XSS defense policies |
-| Caching complexity | Low | Manage via frontend caching strategy |
+| Risk               | Severity | Mitigation Strategy                                                                  |
+| ------------------ | -------- | ------------------------------------------------------------------------------------ |
+| 4KB size limit     | High     | Extend up to 10KB with Multi-Cookie Split (ADR-0003)                                 |
+| XSS exposure       | Medium   | Store only non-sensitive, dev-tool-natured state; apply general XSS defense policies |
+| Caching complexity | Low      | Manage via frontend caching strategy                                                 |
 
 ---
 

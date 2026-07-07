@@ -4,15 +4,15 @@ Isolated storage for agent artifacts. **The source of truth for structural rules
 
 ## 📖 Glossary
 
-| Term | Meaning |
-| :--- | :--- |
-| **run** | A single execution unit of a workflow. Its storage folder is `workstreams/{YYYY-MM-DD}-{slug}/` — the folder is named workstreams, while the execution concept is a run (1:1 correspondence) |
-| **full run** | A run at the scale of a new feature or architectural change — uses the full folder structure (manifest/spec/approvals/executions/reports) |
-| **light run** | A bugfix or small improvement — an abbreviated mode that consolidates decisions, approvals, and logs into a **single `RUN.md` file** |
-| **spec.md** (within a run) | A **snapshot** of the design at the time that run was approved (immutable history, `status: promoted`) |
-| **specs/** | The **canonical copy** of currently valid specs (revisions and supersessions happen only here; trace provenance via `origin_run`) |
-| **gate** | A phase-transition approval record (`approvals/phaseN-gate.md`) — the sole source of truth for approvals |
-| **ADR** | An architecture-level decision record. Exists only in the global `decisions/`; superseded rather than modified |
+| Term                       | Meaning                                                                                                                                                                                      |
+| :------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **run**                    | A single execution unit of a workflow. Its storage folder is `workstreams/{YYYY-MM-DD}-{slug}/` — the folder is named workstreams, while the execution concept is a run (1:1 correspondence) |
+| **full run**               | A run at the scale of a new feature or architectural change — uses the full folder structure (manifest/spec/approvals/executions/reports)                                                    |
+| **light run**              | A bugfix or small improvement — an abbreviated mode that consolidates decisions, approvals, and logs into a **single `RUN.md` file**                                                         |
+| **spec.md** (within a run) | A **snapshot** of the design at the time that run was approved (immutable history, `status: promoted`)                                                                                       |
+| **specs/**                 | The **canonical copy** of currently valid specs (revisions and supersessions happen only here; trace provenance via `origin_run`)                                                            |
+| **gate**                   | A phase-transition approval record (`approvals/phaseN-gate.md`) — the sole source of truth for approvals                                                                                     |
+| **ADR**                    | An architecture-level decision record. Exists only in the global `decisions/`; superseded rather than modified                                                                               |
 
 ## 📁 Structure
 
