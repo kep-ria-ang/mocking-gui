@@ -10,7 +10,7 @@ Choose the agent mission that matches your contribution goal.
 
 - **When**: You want to modify the GUI panel UI or add new functionality to the core engine.
 - **How**: Run `/harness-dev-pipeline` in your AI assistant.
-- **Result**: The `harness-dev-pipeline` workflow orchestrates four sequential phases — Product Planning → Architecture Design → Implementation → Quality Verification — with each phase delegated to a specialized sub-agent.
+- **Result**: The `harness-dev-pipeline` workflow orchestrates four sequential phases — Product Planning → Architecture Design → Implementation → Quality Verification — with each phase delegated to a specialized sub-agent. Small fixes get a lightweight single-file run instead of the full artifact set, so the process scales down to the size of the change.
 
 ### Case 2: Generate Service Mocking Handlers
 
@@ -32,4 +32,4 @@ Every workflow automatically performs the following to reduce contributor burden
 2. **Technical Standards Enforcement**: Validates real-time compliance with `technical-guardrail` rules and architecture standards.
 3. **Documentation Automation**: Keeps technical docs and reports in sync with code changes.
 
-Contributors only need to **give the agent a clear mission** and **review and approve the decision report** generated at each phase.
+Contributors only need to **give the agent a clear mission** and **review and approve the decision report** generated at each phase — every artifact (spec, approval gate, ADR) is saved under `agent-artifacts/` so it can be reviewed alongside the code change.
