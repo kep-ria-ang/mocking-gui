@@ -31,17 +31,10 @@ nvm use 22
 pnpm install
 ```
 
-3. **Build Packages**
+3. **Start Development Environment**
 
 ```bash
-pnpm mocking-gui:build
-```
-
-4. **Start Development Environment**
-
-```bash
-# Start all example environments
-pnpm mocking-gui:build
+# Start all example environments, with the library rebuilding in watch mode
 pnpm example:dev
 ```
 
