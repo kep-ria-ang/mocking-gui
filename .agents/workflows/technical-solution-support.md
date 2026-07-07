@@ -8,8 +8,14 @@ This pipeline is a strategic support process for properly integrating the Mockin
 
 ### 🛡️ Core Operational Mandates
 
-1. **Mandatory Decision Reports**: At every phase transition, a report containing the analysis results and execution strategy must be created in `agent-artifacts/reports/executions/` and user approval must be obtained.
-2. **Explicit Approval Gates**: User confirmation is required before all sub-agent executions and infrastructure changes.
+1. **Project Isolation**: Every engagement creates exactly one folder — `agent-artifacts/solutions/{project-slug}/` — and ALL artifacts of this engagement are written inside it. Use an anonymous slug in public repositories (no client names). Storage rules are defined in [.agents/STRUCTURE.md](../STRUCTURE.md) §2.
+2. **Explicit Approval Gates**: User confirmation is required before all sub-agent executions and infrastructure changes. Each step ends with a gate record in `approvals/stepN-gate.md`.
+
+### 🚀 Engagement Initialization (before Step 1)
+
+Create `solutions/{project-slug}/manifest.yaml` from `.agents/templates/manifest-template.yaml` (`workflow: technical-solution-support`). The `agent-artifacts/solutions/` directory is **not pre-created** — create it lazily here, on the first engagement.
+
+All paths below are relative to `agent-artifacts/solutions/{project-slug}/`.
 
 ---
 
@@ -17,13 +23,13 @@ This pipeline is a strategic support process for properly integrating the Mockin
 
 Performs a precise diagnosis of the target project's tech stack and establishes an adoption strategy.
 
-| Item                  | Detail                                              | Reference Skills (Skills)                                                |
-| :-------------------- | :-------------------------------------------------- | :----------------------------------------------------------------------- |
-| **Responsible Agent** | `solution-architect`                                | `../skills/solution-delivery/SKILL.md`                                   |
-| **Active Knowledge**  | Framework compatibility, mocking maturity diagnosis | `../skills/harness-core/SKILL.md`, `../skills/product-strategy/SKILL.md` |
-| **Final Deliverable** | **`agent-artifacts/reports/audit-report.md`**       | -                                                                        |
-
-> **[Gatekeeper Requirement]**: Write the project diagnostic results report to `agent-artifacts/reports/executions/` and obtain user approval.
+| Item                  | Detail                                                              |
+| :-------------------- | :------------------------------------------------------------------ |
+| **Responsible Agent** | `solution-architect`                                                 |
+| **Active Skills**     | `solution-delivery`, `harness-core`, `product-strategy`              |
+| **Reads**             | Target project codebase, framework & mocking maturity signals        |
+| **Writes**            | `audit-report.md` (diagnosis & adoption strategy) · `executions/step1-audit.md` |
+| **Gate**              | `approvals/step1-gate.md` — then advance `manifest.yaml` to step 2   |
 
 ---
 
@@ -31,13 +37,13 @@ Performs a precise diagnosis of the target project's tech stack and establishes 
 
 Builds a customized Mocking GUI infrastructure based on the diagnostic results.
 
-| Item                   | Detail                                             | Reference Skills (Skills)                                                           |
-| :--------------------- | :------------------------------------------------- | :---------------------------------------------------------------------------------- |
-| **Responsible Agents** | `solution-architect`, `frontend-engineer`          | `../skills/solution-delivery/SKILL.md`                                              |
-| **Active Knowledge**   | SW integration, Cookie Sync, Config initialization | `../skills/browser-sw-specialist/SKILL.md`, `../skills/browser-msw-expert/SKILL.md` |
-| **Final Deliverable**  | **Mocking GUI Configuration Files**                | -                                                                                   |
-
-> **[Gatekeeper Requirement]**: Report the infrastructure setup plan and obtain approval before performing the work.
+| Item                   | Detail                                                             |
+| :--------------------- | :------------------------------------------------------------------ |
+| **Responsible Agents** | `solution-architect`, `frontend-engineer`                            |
+| **Active Skills**      | `solution-delivery`, `browser-sw-specialist`, `browser-msw-expert`   |
+| **Reads**              | `audit-report.md`                                                    |
+| **Writes**             | `config-plan.md` (infrastructure plan) · Mocking GUI configuration files in the target project · `executions/step2-setup.md` |
+| **Gate**               | `approvals/step2-gate.md` — approval required **before** performing infrastructure changes, then advance to step 3 |
 
 ---
 
@@ -45,10 +51,13 @@ Builds a customized Mocking GUI infrastructure based on the diagnostic results.
 
 Builds a high-quality handler and scenario environment that conforms to Mocking GUI standards.
 
-| Item                  | Detail                                                | Reference Skills (Skills)                                                               |
-| :-------------------- | :---------------------------------------------------- | :-------------------------------------------------------------------------------------- |
-| **Active Knowledge**  | 4-Layer separation, data integrity, scenario planning | `../skills/handler-specification/SKILL.md`, `../skills/scenario-orchestration/SKILL.md` |
-| **Final Deliverable** | **Mock Data Layer Codebase**                          | -                                                                                       |
+| Item                  | Detail                                                              |
+| :-------------------- | :------------------------------------------------------------------- |
+| **Responsible Agent** | `handler-specialist`                                                  |
+| **Active Skills**     | `handler-specification`, `scenario-orchestration`                     |
+| **Reads**             | `config-plan.md` · target project API specifications                  |
+| **Writes**            | Mock data layer codebase (4-Layer separation) in the target project · `executions/step3-ecosystem.md` |
+| **Gate**              | `approvals/step3-gate.md` — then advance `manifest.yaml` to step 4    |
 
 ---
 
@@ -56,8 +65,10 @@ Builds a high-quality handler and scenario environment that conforms to Mocking 
 
 Validates the integrity of the built environment and transfers maintenance skills to the user.
 
-| Item                   | Detail                                                 | Reference Skills (Skills)                                                   |
-| :--------------------- | :----------------------------------------------------- | :-------------------------------------------------------------------------- |
-| **Responsible Agents** | `solution-architect`, `testing-specialist`             | `../skills/quality-standard/SKILL.md`                                       |
-| **Active Knowledge**   | Integrity checklist, technical guardrail validation    | `../skills/technical-guardrail/SKILL.md`, `../skills/harness-core/SKILL.md` |
-| **Final Deliverable**  | **`agent-artifacts/reports/final-delivery-report.md`** | -                                                                           |
+| Item                   | Detail                                                             |
+| :--------------------- | :------------------------------------------------------------------ |
+| **Responsible Agents** | `solution-architect`, `testing-specialist`                            |
+| **Active Skills**      | `quality-standard`, `technical-guardrail`, `harness-core`             |
+| **Reads**              | Built environment · `audit-report.md` · `config-plan.md`              |
+| **Writes**             | `final-delivery-report.md` (integrity validation & handover) · `executions/step4-delivery.md` |
+| **Gate**               | `approvals/step4-gate.md` — final gate; set `manifest.yaml` `status: completed` |

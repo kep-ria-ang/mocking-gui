@@ -1,10 +1,10 @@
 ---
 version: 1.0.0
 description: 'Implementation competency for automatically generating Mocking GUI standard 4-Layer handlers and mock data by analyzing API specifications'
-name: handler-specialist
+name: handler-generation
 ---
 
-# Skill: Mocking GUI Handler Factory (Performance-Optimized)
+# Skill: Mocking GUI Handler Generation (Performance-Optimized)
 
 Competency for building Mocking GUI 4-Layer pattern handlers based on API specifications.
 
@@ -33,3 +33,8 @@ Competency for building Mocking GUI 4-Layer pattern handlers based on API specif
 - **Type-Safe**: No use of `any`. Implement interfaces that are 100% consistent with the actual API specification.
 - **Deterministic**: Use `faker` seeds to generate consistent data.
 - **Layered**: Strictly enforce separation of Handlers, Constants, Factories, and Utils layers.
+
+## 4. Reference
+
+- **Faker Standards**: [Deterministic Mock Data Generation Standards](./reference/faker-standards.md)
+- **Mocking Strategy**: [4-Layer Handler Generation & Mocking Strategy](./reference/mocking-strategy.md)
