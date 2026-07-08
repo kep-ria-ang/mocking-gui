@@ -1,0 +1,22 @@
+# into 1 log per phase + reports/release-briefing.md based on the harness-dev-pipeline I/O contract,
+# and promoted 4 core decisions to global ADRs (ADR-0001~0004).
+# No approvals/ exist because there were no approval gate records at the time (retroactive creation forbidden).
+
+version: 1.0.0
+
+run_id: 2026-07-01-ssr-state-sync
+workflow: harness-dev-pipeline
+size: full
+feature_name: SSR State Synchronization
+description: Synchronize server state to the client in the SSR environment (Remove debounce, resolve cookie overflow)
+created_at: 2026-07-01T00:00:00+09:00
+created_by: ria.ang@kakaoenterprise.com
+
+current_phase: 4
+status: completed
+
+decisions:
+  - ADR-0001-cookie-based-ssr-state-store
+  - ADR-0002-remove-debounce-immediate-sync
+  - ADR-0003-multi-cookie-split
+  - ADR-0004-environment-aware-error-handling

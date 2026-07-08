@@ -9,9 +9,9 @@ This guide defines the collaborative framework for the specialist agents respons
 The core engineering group responsible for the quality and architectural consistency of the open-source library itself.
 
 - **📐 [System Architect](.agents/personas/system-architect.md)**: Leads system structure design and architecture standard reviews.
-- **📝 [Product Planner](.agents/personas/product-planner.md)**: Handles product planning, scenario design, and specification authoring (`agent-artifacts/spec/`).
+- **📝 [Product Planner](.agents/personas/product-planner.md)**: Handles product planning, scenario design, and specification authoring (drafted at `agent-artifacts/workstreams/{run}/spec.md`; promoted to `agent-artifacts/specs/{feature}.md` on approval).
 - **🛠️ [Frontend Engineer](.agents/personas/frontend-engineer.md)**: Implements core features and develops the intelligent simulation engine.
-- **🔍 [Testing Specialist](.agents/personas/testing-specialist.md)**: Operates the integrated quality gate and produces integrity reports (`agent-artifacts/reports/`).
+- **🔍 [Testing Specialist](.agents/personas/testing-specialist.md)**: Operates the integrated quality gate and produces integrity reports (`agent-artifacts/workstreams/{run}/reports/`).
 - **🚀 [Release Manager](.agents/personas/release-manager.md)**: Manages automated documentation sync and official releases.
 
 ---
@@ -29,8 +29,9 @@ The strategic support group responsible for integrating the harness into user pr
 ## 🤝 Orchestration
 
 1. **Human-in-the-Loop (User Approval & Reporting)**:
-   - No agent may advance a phase autonomously. A **decision report** must be written and user approval obtained before every phase transition.
-   - All execution logs and reports are stored under `agent-artifacts/reports/executions/`.
+   - No agent may advance a phase autonomously. A **decision report** must be written and user approval obtained before every **phase transition** and before any **destructive change** (significant file modification or system configuration change). Routine sub-agent delegations within an approved phase do not each require a separate gate.
+   - Delegation is performed with the Agent tool, specifying the persona name as `subagent_type` (e.g. `frontend-engineer`); Workers are run with `model: opus` per the operation mandates.
+   - Execution logs are stored under `agent-artifacts/workstreams/{run}/executions/`, and approval-gate records under `agent-artifacts/workstreams/{run}/approvals/`.
 2. **Standard Workflow Compliance**:
    - **Harness Development Pipeline**: Follow the [.agents/workflows/harness-dev-pipeline.md](.agents/workflows/harness-dev-pipeline.md) procedure.
    - **Technical Solution Support**: Follow the [.agents/workflows/technical-solution-support.md](.agents/workflows/technical-solution-support.md) procedure.

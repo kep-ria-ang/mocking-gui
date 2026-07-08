@@ -16,8 +16,8 @@ A strategic consulting skill for identifying the technical constraints of a targ
 
 ## 2. Reference & Detailed Specs
 
-- **Audit Criteria**: [Project Diagnosis and Analysis Criteria](./references/audit-criteria.md)
-- **Infra Setup Guide**: [Infrastructure Setup Instructions per Environment](./references/infra-setup.md)
+- **Audit Criteria**: [Project Diagnosis and Analysis Criteria](./reference/audit-criteria.md)
+- **Infra Setup Guide**: [Infrastructure Setup Instructions per Environment](./reference/infra-setup.md)
 
 ## 3. Decision Tree / Standard Workflow
 
