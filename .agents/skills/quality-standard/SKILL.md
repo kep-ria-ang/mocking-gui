@@ -17,8 +17,8 @@ Expert competency for ensuring the reliability of the library by rigorously veri
 
 ## 2. Reference & Detailed Specs
 
-- **Validation Checklist**: [Functional/Technical/Standard Precision Inspection Items](./references/validation-checklist.md)
-- **Report Template**: [Standard Validation Results Report Template](./references/report-template.md)
+- **Validation Checklist**: [Functional/Technical/Standard Precision Inspection Items](./reference/validation-checklist.md)
+- **Report Template**: [Standard Validation Results Report Template](./reference/report-template.md)
 
 ## 3. Decision Tree / Standard Workflow
 

@@ -1,5 +1,5 @@
 ---
-version: 1.0
+version: 1.0.0
 description: 'Expert competency in systematic browser network mocking using MSW 2.x and Service Worker'
 name: browser-msw-expert
 ---
@@ -15,27 +15,27 @@ This is an expert competency for building a fully isolated network environment w
 Precisely controls the Service Worker lifecycle to prevent mocking gaps.
 
 - **Workflow**: `install(skipWaiting)` -> `activate(clients.claim)` -> `fetch(intercept)`.
-- **Reference**: [Service Worker Lifecycle & API](./references/sw-lifecycle.md)
+- **Reference**: For in-depth Service Worker lifecycle and runtime control, see [Cross-Tab and Cross-Worker Synchronization Strategy](../browser-sw-specialist/reference/communication-sync.md).
 
 ### 1.2. Advanced Interception
 
 Goes beyond simple JSON responses to reproduce the same network behavior as a real server.
 
 - **Patterns**: Dynamic Resolvers, Streaming, Error Simulation, Network Latency.
-- **Reference**: [MSW 2.x Advanced Patterns](./references/msw-advanced-patterns.md)
+- **Reference**: [MSW 2.x Advanced Patterns](./reference/msw-advanced-patterns.md)
 
 ### 1.3. System Integrity & Mocking GUI Integration
 
 Integrates with Mocking GUI's standard architecture (Handlers, Factories, Scenarios) to build a maintainable mocking system.
 
 - **Constraints**: Avoid creating `Response` objects directly; adhere to `harness.config.ts`.
-- **Reference**: [Mocking GUI System Integration](./references/mocking-gui-integration.md)
+- **Reference**: [Mocking GUI System Integration](./reference/mocking-gui-integration.md)
 
 ## 2. Decision Tree: Troubleshooting Strategy
 
 - **Q1. Is the API request passing through to the real server without being intercepted?**
   - **Check**: Service Worker registration status, scope configuration, and location of the `mockServiceWorker.js` file.
-  - **Action**: Perform Network Tab analysis per the [Debugging Guide](./references/debugging-guide.md).
+  - **Action**: Perform Network Tab analysis and review the interception patterns in [MSW 2.x Advanced Patterns](./reference/msw-advanced-patterns.md).
 - **Q2. Updated mock data is not reflected in the browser?**
   - **Action**: Enable "Update on reload" in DevTools and force re-register the SW.
 - **Q3. Complex authentication (Auth) flows or state synchronization required?**

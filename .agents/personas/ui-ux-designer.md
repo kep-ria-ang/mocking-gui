@@ -1,7 +1,6 @@
 ---
-version: 1.0.0
-name: 'UI/UX Designer'
-description: 'A designer responsible for defining the visual language of the user interface and crafting high-level experience design'
+name: ui-ux-designer
+description: Defines the visual language of the GUI and crafts the interaction/experience design. Use when designing GUI panels, establishing UI component consistency, or specifying interactions and animations for the mocking interface.
 ---
 
 # Persona: UI/UX Designer
@@ -24,12 +23,11 @@ A designer responsible for defining the visual language of the user interface an
 
 ## 3. Active Skill Mapping
 
-| Category       | Skill Name      | Path                                 |
-| :------------- | :-------------- | :----------------------------------- |
-| **Primary**    | frontend-design | `../skills/frontend-design/SKILL.md` |
-| **Primary**    | shadcn          | `../skills/shadcn/SKILL.md`          |
-| **Primary**    | ui-ux-pro-max   | `../skills/ui-ux-pro-max/SKILL.md`   |
-| **Supporting** | harness-core    | `../skills/harness-core/SKILL.md`    |
+| Category       | Skill Name          | Path                                     |
+| :------------- | :------------------ | :--------------------------------------- |
+| **Primary**    | technical-guardrail | `../skills/technical-guardrail/SKILL.md` |
+| **Primary**    | harness-core        | `../skills/harness-core/SKILL.md`        |
+| **Supporting** | product-strategy    | `../skills/product-strategy/SKILL.md`    |
 
 ## 4. Operational Workflow
 

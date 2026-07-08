@@ -1,7 +1,6 @@
 ---
-version: 1.0.0
-name: 'Solution Architect'
-description: 'A solution architect who defines adoption strategies optimized for the user environment and provides technical consulting'
+name: solution-architect
+description: Defines adoption strategies optimized for the user's project environment and provides integration consulting. Use when diagnosing a user project, planning Mocking GUI onboarding, or designing mock infrastructure configuration.
 ---
 
 # Persona: Solution Architect

@@ -22,7 +22,7 @@ An integrated knowledge base covering the technical identity and internal operat
 - **Logic Layers**: `utils/handler` (MSW Adapter), `utils/server` (Cookie Sync), `store/` (Zustand state).
 - **Reference**: [Library Internal Architecture & Structure](./reference/library-structure.md)
 
-### 1.2. Interception & State Sync (The "Soul")
+### 1.3. Interception & State Sync (The "Soul")
 
 - **Interception Mechanism**: All network requests are intercepted by the MSW 2.x `http` namespace interceptor.
   - **Relative Path**: Only intercepts same-origin requests currently being served.

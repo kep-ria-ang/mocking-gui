@@ -17,7 +17,7 @@ Specialized technical knowledge for ensuring network interception availability (
 
 ## 2. Reference & Detailed Specs
 
-- **Communication Sync**: [Cross-Tab and Cross-Worker Synchronization Strategy](./references/communication-sync.md)
+- **Communication Sync**: [Cross-Tab and Cross-Worker Synchronization Strategy](./reference/communication-sync.md)
 - **Service Worker Debugging**: [Worker Anomaly Diagnosis Guide (TBD)](#)
 
 ## 3. Decision Tree / Standard Workflow
