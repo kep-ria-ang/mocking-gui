@@ -207,7 +207,7 @@ describe('syncStateToCookie', () => {
     });
   });
 
-  describe('Task 4: Graceful Degradation (Truncate, Don\'t Throw)', () => {
+  describe("Task 4: Graceful Degradation (Truncate, Don't Throw)", () => {
     it('should sync a payload under 3800B as a single cookie (Tier 1, unchanged)', () => {
       const config: Record<string, StoredHandlerVariants> = {
         'GET./users': { active: true, type: HandlerType.MANUAL, variant: '200-success' },
