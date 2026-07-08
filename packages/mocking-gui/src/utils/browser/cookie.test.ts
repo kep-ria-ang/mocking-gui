@@ -183,8 +183,10 @@ describe('syncStateToCookie', () => {
       process.env.NODE_ENV = originalEnv;
     });
 
-    it('should handle edge case: too large state (>10KB)', () => {
+    it('should gracefully truncate (not throw) for edge case: too large state (>10KB)', () => {
       process.env.NODE_ENV = 'development';
+
+      const consoleWarnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
 
       // Create extremely large state
       const config: Record<string, StoredHandlerVariants> = {};
@@ -196,10 +198,156 @@ describe('syncStateToCookie', () => {
         };
       }
 
-      // Should throw error (not silent)
-      expect(() => syncStateToCookie(config)).toThrow();
+      // Should not throw - graceful degradation via truncation instead
+      expect(() => syncStateToCookie(config)).not.toThrow();
+      expect(consoleWarnSpy).toHaveBeenCalled();
 
+      consoleWarnSpy.mockRestore();
       process.env.NODE_ENV = 'production';
+    });
+  });
+
+  describe('Task 4: Graceful Degradation (Truncate, Don\'t Throw)', () => {
+    it('should sync a payload under 3800B as a single cookie (Tier 1, unchanged)', () => {
+      const config: Record<string, StoredHandlerVariants> = {
+        'GET./users': { active: true, type: HandlerType.MANUAL, variant: '200-success' },
+        'POST./users': { active: true, type: HandlerType.AUTO, variant: '201-created' },
+      };
+
+      syncStateToCookie(config);
+
+      const singleCookie = getCookie(document.cookie, COOKIE_KEY);
+      expect(singleCookie).not.toBeNull();
+      const multiCookie = getCookie(document.cookie, `${COOKIE_KEY}_0`);
+      expect(multiCookie).toBeNull();
+    });
+
+    it('should split a 3800-10000B payload into multi-cookie chunks (Tier 2, unchanged)', () => {
+      const config: Record<string, StoredHandlerVariants> = {};
+      for (let i = 0; i < 80; i++) {
+        config[`GET./endpoint-with-very-long-name-${i}`] = {
+          active: true,
+          type: HandlerType.MANUAL,
+          variant: `200-success-with-detailed-response-${i}`,
+        };
+      }
+
+      const encodedSize = encodeURIComponent(
+        JSON.stringify(
+          Object.entries(config).map(([key, c]) => [key, c.type?.[0] || 'M', c.variant || '']),
+        ),
+      ).length;
+      expect(encodedSize).toBeGreaterThan(3800);
+      expect(encodedSize).toBeLessThanOrEqual(10000);
+
+      syncStateToCookie(config);
+
+      const chunk0 = getCookie(document.cookie, `${COOKIE_KEY}_0`);
+      expect(chunk0).not.toBeNull();
+    });
+
+    it('should truncate Swagger entries and keep all Manual/Auto entries when >10000B', () => {
+      const consoleWarnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+
+      const config: Record<string, StoredHandlerVariants> = {
+        'GET./manual-1': { active: true, type: HandlerType.MANUAL, variant: 'manual-variant-1' },
+        'GET./auto-1': { active: true, type: HandlerType.AUTO, variant: 'auto-variant-1' },
+      };
+      for (let i = 0; i < 1000; i++) {
+        config[`GET./swagger-endpoint-with-a-fairly-long-name-${i}`] = {
+          active: true,
+          type: HandlerType.SWAGGER,
+          variant: `200-success-with-a-long-description-payload-${i}`,
+        };
+      }
+
+      syncStateToCookie(config);
+
+      expect(consoleWarnSpy).toHaveBeenCalledWith(expect.stringContaining('Dropped'));
+      expect(consoleWarnSpy).toHaveBeenCalledWith(
+        expect.stringContaining('Manual/Auto handler overrides were preserved'),
+      );
+
+      // Reconstruct whichever cookie form was used (single or multi) and verify contents.
+      const single = getCookie(document.cookie, COOKIE_KEY);
+      const chunk0 = getCookie(document.cookie, `${COOKIE_KEY}_0`);
+      let decoded = '';
+      if (single) {
+        decoded = decodeURIComponent(single);
+      } else {
+        let index = 0;
+        let combined = '';
+        let chunk = getCookie(document.cookie, `${COOKIE_KEY}_${index}`);
+        while (chunk !== null) {
+          combined += chunk;
+          index += 1;
+          chunk = getCookie(document.cookie, `${COOKIE_KEY}_${index}`);
+        }
+        decoded = decodeURIComponent(combined);
+      }
+      expect(chunk0 !== null || single !== null).toBe(true);
+
+      const parsed = JSON.parse(decoded) as Array<[string, string, string]>;
+      expect(parsed.some(([key]) => key === 'GET./manual-1')).toBe(true);
+      expect(parsed.some(([key]) => key === 'GET./auto-1')).toBe(true);
+      // Not all 1000 swagger entries could fit.
+      const swaggerCount = parsed.filter(([, typeChar]) => typeChar === 'S').length;
+      expect(swaggerCount).toBeLessThan(1000);
+
+      consoleWarnSpy.mockRestore();
+    });
+
+    it('should drop all Swagger entries and still not throw when Manual/Auto alone exceed the cap', () => {
+      const consoleWarnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+
+      const config: Record<string, StoredHandlerVariants> = {};
+      // Manual/Auto entries alone exceed HARD_CAP (10000 bytes).
+      for (let i = 0; i < 600; i++) {
+        config[`GET./manual-endpoint-with-a-fairly-long-name-${i}`] = {
+          active: true,
+          type: HandlerType.MANUAL,
+          variant: `200-success-with-a-long-description-payload-${i}`,
+        };
+      }
+      // A handful of Swagger entries that should all be dropped.
+      for (let i = 0; i < 5; i++) {
+        config[`GET./swagger-${i}`] = {
+          active: true,
+          type: HandlerType.SWAGGER,
+          variant: `variant-${i}`,
+        };
+      }
+
+      expect(() => syncStateToCookie(config)).not.toThrow();
+      expect(consoleWarnSpy).toHaveBeenCalledWith(expect.stringContaining('Dropped 5'));
+
+      consoleWarnSpy.mockRestore();
+    });
+
+    it('should never throw for a purely size-driven overflow even in development mode', () => {
+      const originalEnv = process.env.NODE_ENV;
+      process.env.NODE_ENV = 'development';
+
+      const consoleWarnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+      const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+
+      const config: Record<string, StoredHandlerVariants> = {};
+      for (let i = 0; i < 1000; i++) {
+        config[`GET./swagger-endpoint-with-a-fairly-long-name-${i}`] = {
+          active: true,
+          type: HandlerType.SWAGGER,
+          variant: `200-success-with-a-long-description-payload-${i}`,
+        };
+      }
+
+      expect(() => syncStateToCookie(config)).not.toThrow();
+      // Genuine errors still go through console.error; size overflow must not.
+      expect(consoleErrorSpy).not.toHaveBeenCalled();
+      expect(consoleWarnSpy).toHaveBeenCalled();
+
+      consoleWarnSpy.mockRestore();
+      consoleErrorSpy.mockRestore();
+      process.env.NODE_ENV = originalEnv;
     });
   });
 
