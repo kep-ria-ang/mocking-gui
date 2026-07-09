@@ -70,10 +70,10 @@ To develop the `mocking-gui` library with real-time feedback using an example ap
 pnpm example:dev
 ```
 
-This runs the `mocking-gui` build in watch mode together with every example app in parallel, so editing library source rebuilds `dist/` and the running examples pick it up automatically. To work against a single example instead, include it and its dependencies in the turbo filter:
+This runs every example app in parallel under `turbo watch`. The `dev` task depends on `^build`, so editing library source re-runs the `mocking-gui` build and the running examples pick up the fresh `dist/` automatically. To work against a single example instead:
 
 ```bash
-pnpm turbo run dev --filter='react-csr...'
+pnpm turbo watch dev --filter=react-csr
 ```
 
 If you want to run everything (including documentation and all examples):

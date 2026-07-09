@@ -34,7 +34,7 @@ pnpm install
 3. **Start Development Environment**
 
 ```bash
-# Start all example environments, with the library rebuilding in watch mode
+# Start all example environments; the library rebuilds automatically on source changes
 pnpm example:dev
 ```
 
@@ -42,8 +42,8 @@ To test a specific example environment:
 
 ```bash
 # Test specific example
-pnpm --filter next-app-router dev  # Next.js SSR/RSC example
-pnpm --filter react-csr dev      # React (CSR) example
+pnpm turbo watch dev --filter=next-app-router  # Next.js SSR/RSC example
+pnpm turbo watch dev --filter=react-csr        # React (CSR) example
 ```
 
 ### Project Structure

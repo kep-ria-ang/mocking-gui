@@ -44,7 +44,6 @@
   "private": false,
   "scripts": {
     "build": "tsc && vite build",
-    "dev": "vite build --watch",
     "preview": "vite preview",
     "lint": "tsc --noEmit && eslint .",
     "lint:fix": "eslint . --fix",
