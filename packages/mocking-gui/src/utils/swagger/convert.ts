@@ -83,9 +83,13 @@ export const convertSwaggerToHandlers = (baseUrl: string, swagger: OpenAPI): Han
           body = generateMockFromSchema(schema, swagger) as JsonBodyType;
         }
 
+        // Handle "default" response: map to 500 (Internal Server Error)
+        // OpenAPI spec uses "default" for responses not explicitly defined
+        const status = statusCode === 'default' ? 500 : Number(statusCode);
+
         return {
           name: variantName,
-          status: Number(statusCode),
+          status,
           body,
         };
       });

@@ -33,33 +33,103 @@ export const getCookie = (cookieString: string, name: string): string | null => 
 /**
  * Compresses handlerConfigs state and syncs to cookie.
  * Format: [["key", "type(M/A/S)", "variant"], ...]
+ *
+ * Syncs immediately (no debounce) to ensure SSR consistency.
+ * SSR may read cookie during request, so debounce delay causes desynchronization.
+ * Performance impact: negligible (~0.1ms per sync)
  */
-let debounceTimer: ReturnType<typeof setTimeout> | null = null;
+type CookieEntry = [key: string, typeChar: string, variant: string];
+
+const SINGLE_COOKIE_LIMIT = 3800;
+const HARD_CAP = 10000;
+
+/**
+ * Writes an already-encoded payload as a single cookie or, if it exceeds
+ * SINGLE_COOKIE_LIMIT, splits it across multiple cookies.
+ */
+const writeEncodedState = (encoded: string) => {
+  if (encoded.length <= SINGLE_COOKIE_LIMIT) {
+    setCookie(COOKIE_KEY, encoded);
+  } else {
+    syncMultiCookie(encoded);
+  }
+};
+
+/**
+ * Drops Swagger-type entries (in original order) until the encoded payload
+ * fits within HARD_CAP. Manual/Auto entries are always preserved.
+ */
+const truncateEntriesByPriority = (
+  activeEntries: CookieEntry[],
+): { kept: CookieEntry[]; droppedCount: number } => {
+  const priorityEntries = activeEntries.filter(([, typeChar]) => typeChar !== 'S');
+  const swaggerEntries = activeEntries.filter(([, typeChar]) => typeChar === 'S');
+
+  const kept: CookieEntry[] = [...priorityEntries];
+  let droppedCount = 0;
+
+  for (const entry of swaggerEntries) {
+    const candidateEncoded = encodeURIComponent(JSON.stringify([...kept, entry]));
+    if (candidateEncoded.length > HARD_CAP) {
+      droppedCount += 1;
+      continue;
+    }
+    kept.push(entry);
+  }
+
+  return { kept, droppedCount };
+};
 
 export const syncStateToCookie = (handlerConfigs: Record<string, StoredHandlerVariants>) => {
   if (typeof window === 'undefined') return;
 
-  if (debounceTimer) clearTimeout(debounceTimer);
-
-  debounceTimer = setTimeout(() => {
-    const activeEntries = Object.entries(handlerConfigs)
+  try {
+    const activeEntries: CookieEntry[] = Object.entries(handlerConfigs)
       .filter(([_, config]) => config.active)
       .map(([key, config]) => {
         const typeChar = config.type?.[0] || 'M'; // Manual, Auto, Swagger
         return [key, typeChar, config.variant || ''];
       });
 
-    const cookieValue = JSON.stringify(activeEntries);
+    const encoded = encodeURIComponent(JSON.stringify(activeEntries));
 
-    // Check cookie size limit (4KB)
-    if (cookieValue.length > 3800) {
+    if (encoded.length <= HARD_CAP) {
+      // Tiers 1-2: fits as-is, single cookie or chunked.
+      writeEncodedState(encoded);
+    } else {
+      // Tier 3: size limit exceeded. Truncate by priority, then warn instead of throwing.
+      const { kept, droppedCount } = truncateEntriesByPriority(activeEntries);
+
       console.warn(
-        '[MockingGUI] Cookie sync size exceeded limit. Some mocks might not be synced to server.',
+        `[MockingGUI] Mocking state too large (${encoded.length} bytes) to sync in full. ` +
+          `Dropped ${droppedCount} Swagger-type handler override(s) to fit within the ${HARD_CAP} ` +
+          'byte limit. Manual/Auto handler overrides were preserved. Some handler state may not ' +
+          'be reflected in SSR-rendered output.',
       );
-      // If size exceeded, handle partial syncing or error
-      // Currently just warning without truncation
-    }
 
-    setCookie(COOKIE_KEY, encodeURIComponent(cookieValue));
-  }, 300);
+      writeEncodedState(encodeURIComponent(JSON.stringify(kept)));
+    }
+  } catch (error) {
+    console.error('[MockingGUI] Failed to sync state to cookie:', error);
+    // Rethrow in development, log gracefully in production
+    if (process.env.NODE_ENV === 'development') {
+      throw error;
+    }
+  }
+};
+
+/**
+ * Splits large state across multiple cookies (mocking_gui_sync_0, _1, etc.)
+ * Standard pattern used by Google Analytics and other libraries.
+ *
+ * @param encoded - URL-encoded cookie value
+ */
+const syncMultiCookie = (encoded: string) => {
+  const CHUNK_SIZE = 3000; // Conservative size to account for overhead
+  const chunks = encoded.match(new RegExp(`.{1,${CHUNK_SIZE}}`, 'g')) || [];
+
+  chunks.forEach((chunk, index) => {
+    const cookieKey = `${COOKIE_KEY}_${index}`;
+    setCookie(cookieKey, chunk);
+  });
 };

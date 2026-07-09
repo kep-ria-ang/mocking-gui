@@ -8,10 +8,10 @@ import { getHandlerKey, getVariantKey } from '../common/keys';
 import type { HandlerState, RawBody, StoredHandlerVariants } from '@mocking-gui-types/handler';
 
 export const convertToMswHandler = (
-  handlers: HandlerState[],
+  handlers: HandlerState[] = [],
   handlerConfigs: Record<string, StoredHandlerVariants>,
 ): HttpHandler[] => {
-  return handlers?.map(handler => {
+  return handlers.map(handler => {
     const handlerKey = getHandlerKey(handler);
     const storedHandlerConfig =
       handlerConfigs?.[handlerKey] ?? initialStoredHandlerVariants(handler);

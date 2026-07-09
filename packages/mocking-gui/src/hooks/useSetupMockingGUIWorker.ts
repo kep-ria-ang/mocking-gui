@@ -48,24 +48,24 @@ const useSetupMockingGUIWorker = (config: MockingConfig = {}) => {
   const storeHandlers = useHandlerStore(state => state.handlers);
   useEffect(() => {
     const setupMockingGUIWorker = async () => {
-      if (process.env.NODE_ENV === 'development') {
-        try {
-          const worker = MockingGUIWorkerManager.getWorker();
-          setWorker(worker);
+      try {
+        const worker = MockingGUIWorkerManager.getWorker();
+        setWorker(worker);
 
-          if (!MockingGUIWorkerManager.isStarted) {
-            await MockingGUIWorkerManager.start(workerStartOptions);
-          }
-
-          setIsWorkerReady(true);
-        } catch (err) {
-          console.error('[MockingGUI] Failed to setup worker:', err);
-          setError(err as Error);
-          throw err;
+        if (!MockingGUIWorkerManager.isStarted) {
+          await MockingGUIWorkerManager.start(workerStartOptions);
         }
+
+        setIsWorkerReady(true);
+      } catch (err) {
+        console.error('[MockingGUI] Worker setup failed, mocking disabled:', err);
+        setError(err as Error);
       }
     };
-    setupMockingGUIWorker();
+
+    (async () => {
+      await setupMockingGUIWorker();
+    })();
   }, []);
 
   useEffect(() => {

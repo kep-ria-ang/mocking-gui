@@ -362,10 +362,14 @@ export const parseScenariosFromFile = async (file: File): Promise<Scenario[]> =>
 
         resolve(validScenarios);
       } catch (err) {
-        reject(new Error('Invalid JSON format'));
+        const message = err instanceof Error ? err.message : String(err);
+        reject(new Error(`Invalid JSON format: ${message}`));
       }
     };
-    reader.onerror = () => reject(new Error('Failed to read file'));
+    reader.onerror = () => {
+      const message = reader.error?.message || 'Unknown error';
+      reject(new Error(`Failed to read file: ${message}`));
+    };
     reader.readAsText(file);
   });
 };
