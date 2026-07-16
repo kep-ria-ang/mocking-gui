@@ -1,10 +1,21 @@
 /**
+ * Sanitizes an OpenAPI param name into a path-to-regexp-safe identifier.
+ * `path-to-regexp` (used internally by MSW) reads a named param token only
+ * up to the first non-word character, so e.g. "kubeflow-id" would silently
+ * compile to param "kubeflow" + literal "-id", which never matches a real
+ * request. Non-alphanumeric runs are camelCased away instead.
+ */
+const toSafeParamName = (name: string) =>
+  name.replace(/[^a-zA-Z0-9_]+([a-zA-Z0-9])/g, (_, char: string) => char.toUpperCase());
+
+/**
  * Normalize dynamic parameters in Swagger/OpenAPI path to MSW style
  * - "{id}" -> ":id"
+ * - "{kubeflow-id}" -> ":kubeflowId"
  */
 export const normalizePathParams = (path: string) => {
   if (!path) return path;
-  return path.replace(/\{([^}]+)\}/g, ':$1');
+  return path.replace(/\{([^}]+)\}/g, (_, name: string) => `:${toSafeParamName(name)}`);
 };
 
 /**
