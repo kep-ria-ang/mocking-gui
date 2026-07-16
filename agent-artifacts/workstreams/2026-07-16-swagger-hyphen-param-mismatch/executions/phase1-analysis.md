@@ -40,14 +40,10 @@ using camelCase, works correctly for the same base path.
 
    ```js
    const { match } = require('path-to-regexp');
-   match('/v1/kubeflows/:kubeflow-id')(
-     '/v1/kubeflows/a1f0c3d2-0001-4b2a-9c1e-1a2b3c4d0001',
-   );
+   match('/v1/kubeflows/:kubeflow-id')('/v1/kubeflows/a1f0c3d2-0001-4b2a-9c1e-1a2b3c4d0001');
    // => false
 
-   match('/v1/kubeflows/:kubeflowId')(
-     '/v1/kubeflows/a1f0c3d2-0001-4b2a-9c1e-1a2b3c4d0001',
-   );
+   match('/v1/kubeflows/:kubeflowId')('/v1/kubeflows/a1f0c3d2-0001-4b2a-9c1e-1a2b3c4d0001');
    // => { params: { kubeflowId: '...' }, ... }
    ```
 

@@ -23,7 +23,9 @@ describe('normalizePathParams', () => {
   });
 
   it('produces a route that MSW can actually match against a real request', async () => {
-    const route = 'https://example.com' + normalizePathParams('/v1/kubeflows/{kubeflow-id}/groups/{group-name}');
+    const route =
+      'https://example.com' +
+      normalizePathParams('/v1/kubeflows/{kubeflow-id}/groups/{group-name}');
     const handler = http.delete(route, ({ params }) => HttpResponse.json(params));
 
     const result = await handler.run({
