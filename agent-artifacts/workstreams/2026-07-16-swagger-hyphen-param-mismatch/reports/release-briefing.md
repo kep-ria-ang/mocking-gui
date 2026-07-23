@@ -79,14 +79,14 @@ No code changes required. After upgrading:
 
 Full detail in [`reports/integrity-validation.md`](./integrity-validation.md).
 
-| Item                   | Result                                                                                                     |
-| :--------------------- | :--------------------------------------------------------------------------------------------------------- |
-| Type Check (`tsc`)     | ✅ Clean                                                                                                   |
-| Lint (`eslint`)        | ✅ 0 errors (0 warnings in changed files)                                                                  |
+| Item                   | Result                                                                                                                    |
+| :--------------------- | :------------------------------------------------------------------------------------------------------------------------ |
+| Type Check (`tsc`)     | ✅ Clean                                                                                                                  |
+| Lint (`eslint`)        | ✅ 0 errors (0 warnings in changed files)                                                                                 |
 | Unit Tests             | ✅ 46/46 passed (8 `pathParams` tests, including an end-to-end MSW request-matching reproduction of the reported symptom) |
-| Build                  | ✅ Success                                                                                                 |
-| Manual Verification    | ✅ Built package verified via local `yalc` link into the reporting consumer project                        |
-| Backward Compatibility | ✅ No API changes; one-time re-activation needed only for affected hyphenated-param handlers               |
+| Build                  | ✅ Success                                                                                                                |
+| Manual Verification    | ✅ Built package verified via local `yalc` link into the reporting consumer project                                       |
+| Backward Compatibility | ✅ No API changes; one-time re-activation needed only for affected hyphenated-param handlers                              |
 
 ---
 
