@@ -30,9 +30,10 @@ error was thrown and no console warning appeared; the handler simply never
 fired.
 
 **Fix**: `normalizePathParams` now sanitizes each captured brace-param name
-into a `path-to-regexp`-safe camelCase identifier before prefixing with `:`
-(`{kubeflow-id}` → `:kubeflowId`), matching this codebase's existing
-manual-handler naming convention.
+into a `path-to-regexp`-safe identifier before prefixing with `:` — every run
+of unsafe characters is collapsed to an underscore (`{kubeflow-id}` →
+`:kubeflow_id`). A single-line `replace` that also handles leading/trailing
+separators.
 
 ---
 
@@ -45,14 +46,14 @@ path changes.
 hyphenated (kebab-case) path parameters:
 
 - Persisted `handlerConfigs` store keys for those handlers change (e.g.
-  `delete...../v1/kubeflows/:kubeflow-id` → `delete...../v1/kubeflows/:kubeflowId`).
+  `delete...../v1/kubeflows/:kubeflow-id` → `delete...../v1/kubeflows/:kubeflow_id`).
 - Handlers under the old key will appear as "new" entries after upgrading and
   default to inactive. **They must be re-activated once** in the Mocking GUI
   panel (toggle on + select a response variant) after upgrading.
 - This is judged acceptable: the old key never actually worked — no
   previously-functioning mock is being broken.
 - Users whose OpenAPI specs only use non-hyphenated params (`{id}`,
-  `{kubeflowId}`) are unaffected entirely.
+  `{kubeflowId}`, `{kubeflow_id}`) are unaffected entirely.
 
 ---
 
@@ -82,7 +83,7 @@ Full detail in [`reports/integrity-validation.md`](./integrity-validation.md).
 | :--------------------- | :--------------------------------------------------------------------------------------------------------- |
 | Type Check (`tsc`)     | ✅ Clean                                                                                                   |
 | Lint (`eslint`)        | ✅ 0 errors (0 warnings in changed files)                                                                  |
-| Unit Tests             | ✅ 73/73 passed (6 new, including an end-to-end MSW request-matching reproduction of the reported symptom) |
+| Unit Tests             | ✅ 46/46 passed (8 `pathParams` tests, including an end-to-end MSW request-matching reproduction of the reported symptom) |
 | Build                  | ✅ Success                                                                                                 |
 | Manual Verification    | ✅ Built package verified via local `yalc` link into the reporting consumer project                        |
 | Backward Compatibility | ✅ No API changes; one-time re-activation needed only for affected hyphenated-param handlers               |
@@ -91,10 +92,10 @@ Full detail in [`reports/integrity-validation.md`](./integrity-validation.md).
 
 ## 5. Known Limitations
 
-- **camelCase collision (theoretical, undocumented-in-code)**: if an OpenAPI
+- **Name collision (theoretical, undocumented-in-code)**: if an OpenAPI
   spec's single path template contained two differently-punctuated params
-  that collide after camelCase sanitization (e.g. `{group-name}` and
-  `{groupName}` in the same path — an already-ambiguous/duplicate spec), the
+  that collide after underscore sanitization (e.g. `{group-name}` and
+  `{group_name}` in the same path — an already-ambiguous/duplicate spec), the
   second would silently shadow the first. Not defended against; judged out of
   scope since such a spec is malformed regardless.
 - **Underscore-separated params** (`{kubeflow_id}`) were already safe for

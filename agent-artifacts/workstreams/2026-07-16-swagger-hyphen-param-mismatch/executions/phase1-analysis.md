@@ -111,9 +111,12 @@ this as a net-new defect, not a regression.
 
 Single point of change: `normalizePathParams` must convert each captured
 brace-param name to a `path-to-regexp`-safe identifier (letters, digits,
-underscore) before prefixing with `:`. camelCase conversion is preferred over
-underscore to match this codebase's existing manual-handler convention
-(`:kubeflowId`, not `:kubeflow_id`).
+underscore) before prefixing with `:`.
+
+> **Note (2026-07-23)**: this analysis originally recommended camelCase
+> conversion. Code review changed the chosen format to underscore replacement
+> (`:kubeflow_id`); see ADR-0005. This does not affect the defect analysis
+> above, only the identifier format used by the fix.
 
 Not in scope: `maskDynamicSegmentsIndexed` (already operates on `:`-prefixed
 segments post-normalization and is unaffected by the param-name charset),

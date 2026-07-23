@@ -47,16 +47,19 @@ working-tree state — zero errors/warnings in any file touched by this fix.
 
 ```
 $ npx vitest run
- Test Files  7 passed (7)
-      Tests  73 passed (73)
+ Test Files  4 passed (4)
+      Tests  46 passed (46)
 ```
 
-Includes 6 new tests in `pathParams.test.ts`:
+Includes 8 tests in `pathParams.test.ts` (revised 2026-07-23 for the underscore
+normalization — see ADR-0005 Revision note):
 
 - brace-to-colon conversion for a simple param
-- kebab-case param → camelCase colon param
+- kebab-case param → underscore colon param (`{kubeflow-id}` → `:kubeflow_id`)
 - multiple kebab-case params in one path
 - already-safe camelCase param passes through unchanged
+- already-safe snake_case param passes through unchanged
+- trailing/leading separators produce no unsafe characters (`{-id-}` → `:_id_`)
 - **end-to-end reproduction**: builds an MSW `http.delete()` handler from the
   normalized route and runs a real `Request` through `handler.run()`,
   asserting the exact symptom reported in issue #11

@@ -1,17 +1,17 @@
 ---
-version: 1.0.0
-name: 'ADR-0005: Normalize kebab-case OpenAPI path params to camelCase'
+version: 1.1.0
+name: 'ADR-0005: Normalize kebab-case OpenAPI path params to underscore identifiers'
 type: adr
 status: proposed
 run_id: 2026-07-16-swagger-hyphen-param-mismatch
 description: 'normalizePathParams must sanitize brace-param names into path-to-regexp-safe identifiers, since hyphenated names silently never match at request time'
 ---
 
-# ADR-0005: Normalize kebab-case OpenAPI path params to camelCase
+# ADR-0005: Normalize kebab-case OpenAPI path params to underscore identifiers
 
 **Status**: Proposed
-**Date**: 2026-07-16
-**Deciders**: System Architect
+**Date**: 2026-07-16 (revised 2026-07-23)
+**Deciders**: System Architect, Project Owner (code review)
 **Affected Stakeholders**: Frontend Engineer, Testing Specialist, library users importing kebab-case OpenAPI specs
 **Links**: `workstreams/2026-07-16-swagger-hyphen-param-mismatch/executions/phase1-analysis.md`
 
@@ -59,11 +59,10 @@ fires.
 
 ### Final Choice (What?)
 
-`normalizePathParams` converts each `{param-name}` to `:paramName` — hyphens
-(and any other `path-to-regexp`-unsafe characters) inside the captured name
-are stripped and the following character is upper-cased, matching this
-codebase's existing manual-handler convention (`:kubeflowId`, not
-`:kubeflow_id`):
+`normalizePathParams` converts each `{param-name}` to `:param_name` — every run
+of `path-to-regexp`-unsafe characters inside the captured name is collapsed to a
+single underscore (`_` is a word character, so it stays inside the compiled
+param token):
 
 ```ts
 export const normalizePathParams = (path: string) => {
@@ -71,25 +70,48 @@ export const normalizePathParams = (path: string) => {
   return path.replace(/\{([^}]+)\}/g, (_, name: string) => `:${toSafeParamName(name)}`);
 };
 
-const toSafeParamName = (name: string) =>
-  name.replace(/[^a-zA-Z0-9_]+([a-zA-Z0-9])/g, (_, c: string) => c.toUpperCase());
+const toSafeParamName = (name: string) => name.replace(/[^a-zA-Z0-9_]+/g, '_');
 ```
+
+> **Revision (2026-07-23)** — This ADR originally proposed camelCase conversion
+> (`{kubeflow-id}` → `:kubeflowId`). Code review on branch `bug/issue-11`
+> changed the choice to underscore replacement (`:kubeflow_id`) before this ADR
+> was accepted. The Context (the underlying defect) is unchanged; only the
+> chosen identifier format changed. camelCase is retained below as a considered
+> alternative.
 
 ### Rationale (Why this?)
 
 1. **Fixes the actual defect at its single source** — every Swagger-derived
    handler goes through `normalizePathParams`; no downstream code needs to
    change.
-2. **camelCase, not underscore** — matches the convention already used by
-   manually-authored handlers in this codebase, so Swagger and Manual/Auto
-   handlers for the same conceptual param look consistent in the GUI.
-3. **No externally observable regression for already-safe param names** —
-   `{kubeflowId}`, `{kubeflow_id}` (regex only touches non-word-boundary runs
-   followed by a letter/digit) pass through unchanged in practice for the
-   common cases in this consumer's spec.
+2. **Underscore, not camelCase** — the substitution is a single one-line
+   `replace` with no capture group or callback, so it is markedly easier to
+   read and reason about.
+3. **More robust to edge cases** — collapsing runs of unsafe characters handles
+   leading and **trailing** separators (`{-id-}` → `:_id_`, `{foo-}` → `:foo_`).
+   The camelCase regex required a following alphanumeric to fire, so it silently
+   left a trailing hyphen in place — re-introducing the very defect this ADR
+   fixes.
+4. **Closer to the original name** — `kubeflow-id` → `kubeflow_id` preserves the
+   token structure, making the source-to-normalized mapping obvious when
+   debugging.
+5. **No externally observable regression for already-safe param names** —
+   `{kubeflowId}` and `{kubeflow_id}` pass through unchanged (the regex only
+   touches non-word runs).
+6. **Param name is not consumed by identifier** — downstream code
+   (`convert.ts`, then `maskDynamicSegmentsIndexed`, which rewrites params to
+   `:param1`, `:param2`) never reads params by name, so the camelCase-vs-
+   underscore choice has no runtime effect on matching; readability and
+   robustness therefore decide it.
 
 ### Alternatives Considered
 
+- **camelCase conversion (`:kubeflowId`)** — the original proposal, chosen to
+  mirror manually-authored handlers. Changed on code review: underscore's
+  readability and trailing-separator safety outweigh cosmetic consistency, and
+  since params are never accessed by name (point 6) the consistency argument
+  carries no runtime weight.
 - **Leave hyphenated param names, rely on documentation** — rejected: this is
   a silent failure with no error surface; a doc note does not help a user who
   doesn't yet know this defect exists (as in this session).
@@ -103,7 +125,7 @@ const toSafeParamName = (name: string) =>
 
 - Persisted `handlerConfigs` keys for existing kebab-case Swagger handlers
   change (e.g. `delete...../v1/kubeflows/:kubeflow-id` →
-  `delete...../v1/kubeflows/:kubeflowId`). Existing users with such specs will
+  `delete...../v1/kubeflows/:kubeflow_id`). Existing users with such specs will
   see those handlers as "new" (default `active: false`) after upgrading, and
   must re-activate them once. This is judged acceptable: the
   old keys pointed at handlers that never worked, so there is no working

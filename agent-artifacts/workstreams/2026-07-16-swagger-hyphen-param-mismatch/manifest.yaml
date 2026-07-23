@@ -30,6 +30,6 @@ decisions:
 
 # ── Risks ──────────────────────────────────────
 risks:
-  - name: 'camelCase rewrite of param names could theoretically collide with an existing camelCase param in the same path template'
+  - name: 'underscore rewrite of param names could theoretically collide with an existing snake_case param in the same path template'
     severity: low
     mitigation: 'Collision would already require an ambiguous/duplicate OpenAPI spec; document as a known edge case, not handled defensively'
